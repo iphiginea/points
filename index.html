@@ -7,6 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#4E5D4B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Points">
 <style>
   :root{
     --cream:#F6F3EC;
@@ -31,6 +38,18 @@
     font-family:'Inter',sans-serif;
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 40% at 15% 8%, rgba(169,136,79,0.06), transparent 60%),
+      radial-gradient(ellipse 55% 45% at 88% 78%, rgba(78,93,75,0.07), transparent 60%),
+      radial-gradient(ellipse 40% 35% at 92% 12%, rgba(220,227,217,0.5), transparent 65%);
   }
   ::selection{background:var(--sage-tint);}
 
@@ -109,6 +128,11 @@
     display:flex;
     align-items:center;
     justify-content:center;
+    transition:opacity .35s ease;
+  }
+  .point.dimmed{
+    opacity:0;
+    pointer-events:none;
   }
   .point .halo{
     position:absolute;
@@ -185,8 +209,7 @@
   /* ---------- Session panel ---------- */
   .panel-backdrop{
     position:fixed; inset:0;
-    background:rgba(43,42,38,0.28);
-    backdrop-filter:blur(2px);
+    background:rgba(43,42,38,0.10);
     opacity:0; pointer-events:none;
     transition:opacity .25s ease;
     z-index:40;
@@ -209,7 +232,7 @@
   .panel.open{ transform:translateX(0); }
   @media (max-width:640px){
     .panel{
-      width:100%; height:88%; top:auto; bottom:0; right:0;
+      width:100%; height:60%; top:auto; bottom:0; right:0;
       border-radius:20px 20px 0 0;
       transform:translateY(100%);
       box-shadow:0 -16px 40px rgba(43,42,38,0.14);
@@ -314,6 +337,68 @@
     color:var(--ink-soft);
   }
 
+  .reflection{
+    display:none;
+    margin-top:24px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    opacity:0;
+    transition:opacity .6s ease;
+  }
+  .reflection.visible{ display:block; }
+  .reflection.shown{ opacity:1; }
+  .reflection-options{
+    display:flex;
+    gap:8px;
+  }
+  .reflection-chip{
+    flex:1;
+    padding:11px 6px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--cream);
+    color:var(--ink-soft);
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .reflection-chip:hover{ border-color:var(--brass-soft); color:var(--ink); }
+  .reflection-chip.chosen{ background:var(--sage-deep); border-color:var(--sage-deep); color:#fff; }
+
+  .closing-screen{
+    display:none;
+    position:absolute;
+    inset:0;
+    background:var(--paper);
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    opacity:0;
+    transition:opacity .8s ease;
+    border-radius:inherit;
+  }
+  .closing-screen.visible{ display:flex; }
+  .closing-screen.shown{ opacity:1; }
+  .closing-mark{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--brass);
+    box-shadow:0 0 0 10px var(--sage-tint);
+  }
+  .closing-message{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:19px;
+    color:var(--sage-deep);
+    text-align:center;
+    padding:0 20px;
+  }
+
   .btn{
     width:100%;
     padding:13px 18px;
@@ -341,6 +426,7 @@
     display:none;
     max-height:340px;
     overflow-y:auto;
+    scroll-behavior:smooth;
     padding-right:4px;
   }
   .script-box.visible{ display:block; }
@@ -479,6 +565,20 @@
   </div>
   <div class="script-box" id="curatedScript"></div>
   <audio id="sessionAudio" preload="none"></audio>
+
+  <div class="reflection" id="reflection">
+    <div class="eyebrow" style="margin-bottom:10px;">How do you feel?</div>
+    <div class="reflection-options">
+      <button class="reflection-chip" data-mood="lighter">Lighter</button>
+      <button class="reflection-chip" data-mood="same">About the same</button>
+      <button class="reflection-chip" data-mood="heavier">Heavier</button>
+    </div>
+  </div>
+
+  <div class="closing-screen" id="closingScreen">
+    <div class="closing-mark"></div>
+    <div class="closing-message" id="closingMessage">Carry this with you.</div>
+  </div>
 </div>
 
 <script>
@@ -816,7 +916,13 @@ function openPanel(id){
   currentPoint = POINTS.find(p=>p.id===id);
   if(!currentPoint) return;
 
-  document.querySelectorAll('.point').forEach(el=>el.classList.toggle('active', el.dataset.id===id));
+  haptic(12);
+
+  document.querySelectorAll('.point').forEach(el=>{
+    const isSelected = el.dataset.id === id;
+    el.classList.toggle('active', isSelected);
+    el.classList.toggle('dimmed', !isSelected);
+  });
   document.querySelectorAll('.chip').forEach(el=>el.classList.toggle('active', el.dataset.id===id));
 
   document.getElementById('panelPointIdx').textContent = "POINT · " + currentPoint.category.toUpperCase();
@@ -833,6 +939,7 @@ function openPanel(id){
   document.querySelectorAll('.length-chip').forEach(c=>c.classList.toggle('active', c.dataset.length==='medium'));
   resetPlayer(curatedPlayerState);
   stopBreathingLoop();
+  resetReflectionAndClosing();
 
   const sessionAudio = document.getElementById('sessionAudio');
   sessionAudio.pause();
@@ -841,6 +948,9 @@ function openPanel(id){
 
   // Points with real narration skip the length picker — the recording has a fixed length
   document.getElementById('lengthPicker').style.display = currentPoint.audio ? 'none' : 'flex';
+
+  // Keep the figure visible above the panel rather than scrolled out of view
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
   panel.classList.add('open');
   backdrop.classList.add('open');
@@ -852,7 +962,10 @@ function closePanel(){
   pausePlayer(curatedPlayerState);
   document.getElementById('sessionAudio').pause();
   stopBreathingLoop();
-  document.querySelectorAll('.point').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.point').forEach(el=>{
+    el.classList.remove('active');
+    el.classList.remove('dimmed');
+  });
   document.querySelectorAll('.chip').forEach(el=>el.classList.remove('active'));
 }
 document.getElementById('closePanel').addEventListener('click', closePanel);
@@ -931,6 +1044,7 @@ sessionAudioEl.addEventListener('ended', ()=>{
   document.getElementById('curatedPlayBtn').textContent = '↺';
   document.getElementById('curatedStatus').textContent = 'Session complete';
   stopBreathingLoop();
+  showReflection();
 });
 
 function showFullScript(state, text){
@@ -1104,16 +1218,17 @@ function advanceSession(state){
     state.playing = false;
     state.btnEl.textContent = '↺';
     stopBreathingLoop();
+    showReflection();
     return;
   }
   chime();
   const p = document.createElement('p');
   p.textContent = state.paragraphs[state.index];
   p.style.opacity = '0';
-  p.style.transition = 'opacity 1.3s ease';
+  p.style.transition = 'opacity 3s ease';
   state.boxEl.appendChild(p);
   requestAnimationFrame(()=> requestAnimationFrame(()=>{ p.style.opacity = '1'; }));
-  state.boxEl.scrollTop = state.boxEl.scrollHeight;
+  state.boxEl.scrollTo({ top: state.boxEl.scrollHeight, behavior: 'smooth' });
   state.statusEl.textContent = `Line ${state.index + 1} of ${state.paragraphs.length}`;
   const dur = readingDuration(state.paragraphs[state.index], state.paceMultiplier);
   state.index++;
@@ -1159,11 +1274,25 @@ function resetPlayer(state){
 }
 
 /* ============ HISTORY (localStorage) ============ */
+let lastSessionTimestamp = null;
 function logSession(label, type){
   const log = JSON.parse(localStorage.getItem('points_history') || '[]');
-  log.unshift({ label, type, date: new Date().toISOString() });
+  const entry = { label, type, date: new Date().toISOString() };
+  log.unshift(entry);
   localStorage.setItem('points_history', JSON.stringify(log.slice(0,30)));
+  lastSessionTimestamp = entry.date;
   renderHistory();
+}
+const MOOD_LABELS = { lighter: 'Lighter', same: 'Same', heavier: 'Heavier' };
+function saveMood(mood){
+  if(!lastSessionTimestamp) return;
+  const log = JSON.parse(localStorage.getItem('points_history') || '[]');
+  const entry = log.find(e=>e.date === lastSessionTimestamp);
+  if(entry){
+    entry.mood = mood;
+    localStorage.setItem('points_history', JSON.stringify(log));
+    renderHistory();
+  }
 }
 function renderHistory(){
   const log = JSON.parse(localStorage.getItem('points_history') || '[]');
@@ -1175,10 +1304,72 @@ function renderHistory(){
   el.innerHTML = log.slice(0,8).map(item=>{
     const d = new Date(item.date);
     const dateStr = d.toLocaleDateString(undefined, {month:'short', day:'numeric'});
-    return `<div class="history-item"><span class="h-name">${item.label}</span><span class="h-date">${dateStr}</span></div>`;
+    const moodTag = item.mood ? ` · ${MOOD_LABELS[item.mood] || item.mood}` : '';
+    return `<div class="history-item"><span class="h-name">${item.label}${moodTag}</span><span class="h-date">${dateStr}</span></div>`;
   }).join('');
 }
 renderHistory();
+
+/* ============ HAPTIC FEEDBACK ============ */
+function haptic(ms){
+  try{
+    if('vibrate' in navigator) navigator.vibrate(ms);
+  }catch(e){ /* unsupported — no-op */ }
+}
+
+/* ============ REFLECTION + CLOSING SCREEN ============ */
+function showReflection(){
+  const refl = document.getElementById('reflection');
+  refl.classList.add('visible');
+  requestAnimationFrame(()=> requestAnimationFrame(()=> refl.classList.add('shown')));
+}
+function hideReflection(){
+  const refl = document.getElementById('reflection');
+  refl.classList.remove('shown');
+  setTimeout(()=> refl.classList.remove('visible'), 600);
+}
+function resetReflectionAndClosing(){
+  const refl = document.getElementById('reflection');
+  refl.classList.remove('visible', 'shown');
+  document.querySelectorAll('.reflection-chip').forEach(c=>c.classList.remove('chosen'));
+  const closing = document.getElementById('closingScreen');
+  closing.classList.remove('visible', 'shown');
+}
+const CLOSING_MESSAGES = [
+  "Carry this with you.",
+  "That's enough for now.",
+  "Well held.",
+  "Something has shifted, even quietly."
+];
+function showClosingScreen(){
+  const closing = document.getElementById('closingScreen');
+  document.getElementById('closingMessage').textContent =
+    CLOSING_MESSAGES[Math.floor(Math.random() * CLOSING_MESSAGES.length)];
+  closing.classList.add('visible');
+  requestAnimationFrame(()=> requestAnimationFrame(()=> closing.classList.add('shown')));
+  setTimeout(()=>{ closePanel(); }, 2600);
+}
+document.querySelectorAll('.reflection-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    document.querySelectorAll('.reflection-chip').forEach(c=>c.classList.remove('chosen'));
+    chip.classList.add('chosen');
+    haptic(15);
+    saveMood(chip.dataset.mood);
+    setTimeout(()=>{
+      hideReflection();
+      showClosingScreen();
+    }, 350);
+  });
+});
+
+/* ============ PWA: SERVICE WORKER REGISTRATION ============ */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{
+      /* not fatal — app still works fully without install support */
+    });
+  });
+}
 </script>
 </body>
 </html>
