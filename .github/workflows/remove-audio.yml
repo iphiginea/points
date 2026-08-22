@@ -1,0 +1,114 @@
+name: Remove Points audio
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/remove-audio.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  remove-audio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Remove audio features
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          text = path.read_text()
+
+          text = re.sub(r'^\s*audio:\s*["\']audio/[^"\']+["\'],\s*\n', '', text, flags=re.MULTILINE)
+          text = text.replace('  <audio id="sessionAudio" preload="none"></audio>\n', '')
+          text = text.replace('A soft chime marks each new passage', 'Each passage appears at a gentle pace')
+
+          text = re.sub(
+              r"\n  const sessionAudio = document\.getElementById\('sessionAudio'\);\n"
+              r"  sessionAudio\.pause\(\);\n"
+              r"  sessionAudio\.removeAttribute\('src'\);\n"
+              r"  sessionAudio\.load\(\);\n\n"
+              r"  // Points with real narration skip the length picker — the recording has a fixed length\n"
+              r"  document\.getElementById\('lengthPicker'\)\.style\.display = currentPoint\.audio \? 'none' : 'flex';\n",
+              "\n  document.getElementById('lengthPicker').style.display = 'flex';\n",
+              text,
+          )
+
+          text = text.replace("  document.getElementById('sessionAudio').pause();\n", '')
+
+          text = re.sub(
+              r"  if\(currentPoint\.audio\)\{.*?\n  \}else\{\n"
+              r"    startSession\(curatedPlayerState, currentPoint\.script, selectedLength\);\n"
+              r"    startBreathingLoop\(\);\n"
+              r"  \}",
+              "  startSession(curatedPlayerState, currentPoint.script, selectedLength);\n  startBreathingLoop();",
+              text,
+              flags=re.DOTALL,
+          )
+
+          text = re.sub(
+              r"\n  if\(currentPoint && currentPoint\.audio\)\{.*?\n    return;\n  \}",
+              '',
+              text,
+              flags=re.DOTALL,
+          )
+
+          text = re.sub(
+              r"\n/\* ---- Real narrated audio events.*?\n\}\);\n\nfunction showFullScript\(state, text\)\{.*?\n\}\n",
+              '\n',
+              text,
+              flags=re.DOTALL,
+          )
+
+          text = text.replace('/* ============ BREATHING VISUAL + SOUND ============ */', '/* ============ BREATHING VISUAL ============ */')
+          text = text.replace("    playBreathSound('in', durMs / 1000);\n", '')
+          text = text.replace("    playBreathSound('out', durMs / 1000);\n", '')
+          text = text.replace('  chime();\n', '')
+
+          text = re.sub(
+              r"\n/\* ============ AMBIENT CHIME \(Web Audio\) ============ \*/.*?\n/\* ============ PACED TEXT SESSION PLAYER ============ \*/",
+              '\n/* ============ PACED TEXT SESSION PLAYER ============ */',
+              text,
+              flags=re.DOTALL,
+          )
+
+          if 'sessionAudio' in text or 'currentPoint.audio' in text or 'AudioContext' in text or 'playBreathSound' in text or 'audio/shenmen.mp3' in text:
+              raise SystemExit('Audio references remain in index.html')
+
+          path.write_text(text)
+
+          sw = Path('service-worker.js')
+          sw_text = sw.read_text()
+          sw_text = sw_text.replace('// let it open when offline. Not doing aggressive caching of audio (those\n// are large and update over time), only the shell.\n', '// let it open when offline. Only the app shell is cached.\n')
+          sw_text = sw_text.replace('// without risking stale audio/session content while online).', '// without risking stale session content while online).')
+          sw.write_text(sw_text)
+
+          audio_dir = Path('audio')
+          if audio_dir.exists():
+              for child in audio_dir.iterdir():
+                  child.unlink()
+              audio_dir.rmdir()
+          PY
+
+      - name: Verify audio is gone
+        run: |
+          ! grep -RniE 'sessionAudio|audio/shenmen|AudioContext|playBreathSound|AMBIENT CHIME|real narrated audio' index.html service-worker.js
+          test ! -d audio
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html service-worker.js audio
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+            exit 0
+          fi
+          git commit -m "Remove audio from Points"
+          git push origin HEAD:main
