@@ -1,6 +1,5 @@
 // Minimal service worker — just enough to make the app installable and
-// let it open when offline. Not doing aggressive caching of audio (those
-// are large and update over time), only the shell.
+// let it open when offline. Only the app shell is cached.
 const CACHE_NAME = 'points-shell-v1';
 const SHELL_FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
@@ -22,7 +21,7 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   // Network-first for everything, falling back to cache (covers the offline case
-  // without risking stale audio/session content while online).
+  // without risking stale session content while online).
   event.respondWith(
     fetch(event.request).catch(() => caches.match(event.request))
   );

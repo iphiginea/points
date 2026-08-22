@@ -561,10 +561,9 @@
 
   <div class="player" id="curatedPlayer">
     <button id="curatedPlayBtn">▶</button>
-    <div class="player-status" id="curatedStatus">A soft chime marks each new passage</div>
+    <div class="player-status" id="curatedStatus">Each passage appears at a gentle pace</div>
   </div>
   <div class="script-box" id="curatedScript"></div>
-  <audio id="sessionAudio" preload="none"></audio>
 
   <div class="reflection" id="reflection">
     <div class="eyebrow" style="margin-bottom:10px;">How do you feel?</div>
@@ -589,7 +588,6 @@
 const POINTS = [
   {
     id:"shenmen", name:"Shén Mén", sub:"Spirit Gate", x:40, y:9, category:"Stress & Overwhelm",
-    audio:"audio/shenmen.mp3",
     why:"Known in ear acupuncture as the 'Spirit Gate' — traditionally the point practitioners return to first, for settling a mind that's running too many threads at once.",
     script:`Find a position where your body can fully release its weight — chair, floor, wherever you are.
 
@@ -941,13 +939,7 @@ function openPanel(id){
   stopBreathingLoop();
   resetReflectionAndClosing();
 
-  const sessionAudio = document.getElementById('sessionAudio');
-  sessionAudio.pause();
-  sessionAudio.removeAttribute('src');
-  sessionAudio.load();
-
-  // Points with real narration skip the length picker — the recording has a fixed length
-  document.getElementById('lengthPicker').style.display = currentPoint.audio ? 'none' : 'flex';
+  document.getElementById('lengthPicker').style.display = 'flex';
 
   // Keep the figure visible above the panel rather than scrolled out of view
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -960,7 +952,6 @@ function closePanel(){
   panel.classList.remove('open');
   backdrop.classList.remove('open');
   pausePlayer(curatedPlayerState);
-  document.getElementById('sessionAudio').pause();
   stopBreathingLoop();
   document.querySelectorAll('.point').forEach(el=>{
     el.classList.remove('active');
@@ -992,32 +983,12 @@ document.getElementById('startCurated').addEventListener('click', ()=>{
   document.getElementById('curatedPlayer').classList.add('visible');
   document.getElementById('breathWrap').classList.add('visible');
 
-  if(currentPoint.audio){
-    showFullScript(curatedPlayerState, currentPoint.script);
-    const sessionAudio = document.getElementById('sessionAudio');
-    sessionAudio.src = currentPoint.audio;
-    sessionAudio.currentTime = 0;
-    sessionAudio.play();
-  }else{
-    startSession(curatedPlayerState, currentPoint.script, selectedLength);
-    startBreathingLoop();
-  }
+  startSession(curatedPlayerState, currentPoint.script, selectedLength);
+  startBreathingLoop();
   logSession(currentPoint.name + ' · ' + currentPoint.category, 'curated');
 });
 
 document.getElementById('curatedPlayBtn').addEventListener('click', ()=>{
-  if(currentPoint && currentPoint.audio){
-    const sessionAudio = document.getElementById('sessionAudio');
-    if(sessionAudio.ended || !sessionAudio.src){
-      sessionAudio.currentTime = 0;
-      sessionAudio.play();
-    }else if(sessionAudio.paused){
-      sessionAudio.play();
-    }else{
-      sessionAudio.pause();
-    }
-    return;
-  }
   togglePlayer(curatedPlayerState);
   if(curatedPlayerState.playing){
     startBreathingLoop();
@@ -1026,38 +997,8 @@ document.getElementById('curatedPlayBtn').addEventListener('click', ()=>{
   }
 });
 
-/* ---- Real narrated audio events (breathing + status stay in sync with actual playback) ---- */
-const sessionAudioEl = document.getElementById('sessionAudio');
-sessionAudioEl.addEventListener('play', ()=>{
-  document.getElementById('curatedPlayBtn').textContent = '❚❚';
-  document.getElementById('curatedStatus').textContent = 'Playing…';
-  startBreathingLoop();
-});
-sessionAudioEl.addEventListener('pause', ()=>{
-  if(!sessionAudioEl.ended){
-    document.getElementById('curatedPlayBtn').textContent = '▶';
-    document.getElementById('curatedStatus').textContent = 'Paused';
-  }
-  stopBreathingLoop();
-});
-sessionAudioEl.addEventListener('ended', ()=>{
-  document.getElementById('curatedPlayBtn').textContent = '↺';
-  document.getElementById('curatedStatus').textContent = 'Session complete';
-  stopBreathingLoop();
-  showReflection();
-});
 
-function showFullScript(state, text){
-  state.boxEl.innerHTML = '';
-  paceScript(text).forEach(t=>{
-    const p = document.createElement('p');
-    p.textContent = t;
-    state.boxEl.appendChild(p);
-  });
-  state.boxEl.classList.add('visible');
-}
-
-/* ============ BREATHING VISUAL + SOUND ============ */
+/* ============ BREATHING VISUAL ============ */
 let breathPhase = 'in';
 let breathTimer = null;
 let breathing = false;
@@ -1081,7 +1022,6 @@ function runBreathPhase(){
     circle.classList.remove('exhale');
     circle.classList.add('inhale');
     label.textContent = 'Breathe in';
-    playBreathSound('in', durMs / 1000);
   }else if(breathPhase === 'hold'){
     // circle stays at its current (inhaled) size — no transition change
     label.textContent = 'Hold';
@@ -1090,7 +1030,6 @@ function runBreathPhase(){
     circle.classList.remove('inhale');
     circle.classList.add('exhale');
     label.textContent = 'Breathe out';
-    playBreathSound('out', durMs / 1000);
   }
 
   breathTimer = setTimeout(()=>{
@@ -1102,79 +1041,6 @@ function runBreathPhase(){
 function stopBreathingLoop(){
   breathing = false;
   clearTimeout(breathTimer);
-}
-
-/* ============ AMBIENT CHIME (Web Audio) ============ */
-let audioCtx;
-
-function chime(){
-  try{
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    if(audioCtx.state === 'suspended') audioCtx.resume();
-    const now = audioCtx.currentTime;
-
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 1100;
-    filter.Q.value = 0.3;
-    filter.connect(audioCtx.destination);
-
-    // A soft open fifth (A3 + E4), like a distant singing bowl rather than a UI ding
-    [220.0, 329.63].forEach((freq)=>{
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0, now);
-      gain.gain.linearRampToValueAtTime(0.045, now + 1.2);   // slow attack, no sharp transient
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 4.5); // long, gentle decay
-      osc.connect(gain).connect(filter);
-      osc.start(now);
-      osc.stop(now + 4.7);
-    });
-  }catch(e){ /* audio unavailable — reveal still proceeds silently */ }
-}
-
-let breathNoiseBuffer;
-function getNoiseBuffer(ctx){
-  if(!breathNoiseBuffer || breathNoiseBuffer.sampleRate !== ctx.sampleRate){
-    const len = ctx.sampleRate * 6.5;
-    breathNoiseBuffer = ctx.createBuffer(1, len, ctx.sampleRate);
-    const data = breathNoiseBuffer.getChannelData(0);
-    for(let i = 0; i < len; i++){ data[i] = Math.random() * 2 - 1; }
-  }
-  return breathNoiseBuffer;
-}
-function playBreathSound(direction, durSeconds){
-  try{
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    if(audioCtx.state === 'suspended') audioCtx.resume();
-    const now = audioCtx.currentTime;
-    const dur = durSeconds || 4;
-
-    const source = audioCtx.createBufferSource();
-    source.buffer = getNoiseBuffer(audioCtx);
-
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.Q.value = 0.6;
-    if(direction === 'in'){
-      filter.frequency.setValueAtTime(320, now);
-      filter.frequency.linearRampToValueAtTime(680, now + dur);
-    }else{
-      filter.frequency.setValueAtTime(680, now);
-      filter.frequency.linearRampToValueAtTime(320, now + dur);
-    }
-
-    const gain = audioCtx.createGain();
-    gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(0.008, now + dur * 0.45); // very soft — barely-there breath texture
-    gain.gain.linearRampToValueAtTime(0, now + dur);
-
-    source.connect(filter).connect(gain).connect(audioCtx.destination);
-    source.start(now);
-    source.stop(now + dur + 0.05);
-  }catch(e){ /* audio unavailable — breathing visual still proceeds silently */ }
 }
 
 /* ============ PACED TEXT SESSION PLAYER ============ */
@@ -1221,7 +1087,6 @@ function advanceSession(state){
     showReflection();
     return;
   }
-  chime();
   const p = document.createElement('p');
   p.textContent = state.paragraphs[state.index];
   p.style.opacity = '0';
