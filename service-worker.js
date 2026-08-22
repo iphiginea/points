@@ -1,6 +1,7 @@
-// Minimal service worker — just enough to make the app installable and
-// let it open when offline. Only the app shell is cached.
-const CACHE_NAME = 'points-shell-v1';
+// Minimal service worker for install support, offline fallback, and one small
+// compatibility patch: Shén Mén uses the standard paced text session instead
+// of the removed narration track.
+const CACHE_NAME = 'points-shell-v2';
 const SHELL_FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (event) => {
@@ -19,10 +20,30 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-self.addEventListener('fetch', (event) => {
-  // Network-first for everything, falling back to cache (covers the offline case
-  // without risking stale session content while online).
-  event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+async function pageResponse(request) {
+  const response = await fetch(request);
+  const type = response.headers.get('content-type') || '';
+  if (!type.includes('text/html')) return response;
+
+  const html = (await response.text()).replace(
+    'audio:"audio/shenmen.mp3",',
+    '',
   );
+
+  const headers = new Headers(response.headers);
+  headers.delete('content-length');
+  return new Response(html, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(pageResponse(event.request).catch(() => caches.match('./index.html')));
+    return;
+  }
+
+  event.respondWith(fetch(event.request).catch(() => caches.match(event.request)));
 });
