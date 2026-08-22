@@ -1,17 +1,15 @@
 name: Restore ambient Points audio
 
 on:
-  pull_request:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/restore-ambient-audio.yml
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
 
 jobs:
   restore:
+    if: github.event.issue.title == 'restore-points-ambient-audio'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -73,7 +71,7 @@ function chime(){
       osc.start(now);
       osc.stop(now + 4.7);
     });
-  }catch(e){ /* audio unavailable — reveal still proceeds silently */ }
+  }catch(e){ /* audio unavailable */ }
 }
 
 let breathNoiseBuffer;
@@ -111,7 +109,7 @@ function playBreathSound(direction, durSeconds){
     source.connect(filter).connect(gain).connect(audioCtx.destination);
     source.start(now);
     source.stop(now + dur + 0.05);
-  }catch(e){ /* audio unavailable — breathing visual still proceeds silently */ }
+  }catch(e){ /* audio unavailable */ }
 }
 
 '''
