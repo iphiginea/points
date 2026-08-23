@@ -1,4 +1,4 @@
-// Points v15 session behavior: quiet native reader advance and immersive perimeter breathing.
+// Points v16 session behavior: fixed hypnosis reader and immersive perimeter breathing.
 (() => {
   if (typeof panel === 'undefined' || !panel) return;
 
@@ -37,77 +37,157 @@
     .panel.breath-hold .breath-label{color:var(--sage-deep)!important;}
     .panel.breath-out .breath-label{color:var(--ink-faint)!important;}
     .breath-circle{display:none!important;}
-    .script-box,
-    .script-box *{overflow-anchor:none!important;}
-    .script-box p{scroll-margin-bottom:118px;}
+
+    .panel.reader-mode{
+      overflow-y:hidden!important;
+    }
+    .panel.reader-mode .why-label,
+    .panel.reader-mode .why,
+    .panel.reader-mode #lengthPicker,
+    .panel.reader-mode #startCurated{
+      display:none!important;
+    }
+    .panel.reader-mode .reader-pace-label{
+      display:none!important;
+    }
+    .panel.reader-mode #curatedPlayer{
+      margin-top:12px;
+    }
+    .panel.reader-mode #breathWrap{
+      margin:10px 0 0;
+      padding:4px 0 0;
+    }
+
+    .script-box{
+      position:relative!important;
+      height:clamp(320px,44vh,470px)!important;
+      min-height:320px!important;
+      max-height:none!important;
+      overflow:hidden!important;
+      overflow-anchor:none!important;
+      margin-top:12px!important;
+      padding:0 8px!important;
+      scroll-behavior:auto!important;
+    }
+    .script-box p{
+      position:absolute!important;
+      left:8px;
+      right:8px;
+      top:62%;
+      margin:0!important;
+      opacity:0;
+      transform:translateY(-50%) translateY(12px);
+      filter:blur(0);
+      font-size:15.5px;
+      line-height:1.9;
+      text-align:left;
+      transition:
+        top 3.4s cubic-bezier(.22,.7,.25,1),
+        opacity 3.4s cubic-bezier(.22,.7,.25,1),
+        transform 3.4s cubic-bezier(.22,.7,.25,1),
+        filter 3.4s ease;
+      will-change:top,opacity,transform;
+    }
+    .script-box p.reader-current{
+      top:62%;
+      opacity:1;
+      transform:translateY(-50%) translateY(0);
+    }
+    .script-box p.reader-previous{
+      top:24%;
+      opacity:.22;
+      transform:translateY(-50%) translateY(-4px);
+      filter:blur(.15px);
+    }
+    .script-box p.reader-leaving{
+      top:7%;
+      opacity:0;
+      transform:translateY(-50%) translateY(-12px);
+      filter:blur(.5px);
+    }
+
+    @media (max-width:520px){
+      .panel.reader-mode{
+        padding-top:24px!important;
+        padding-bottom:28px!important;
+      }
+      .script-box{
+        height:clamp(330px,46vh,455px)!important;
+        min-height:330px!important;
+        margin-top:8px!important;
+      }
+      .script-box p{
+        font-size:15px;
+        line-height:1.88;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .script-box p{
+        transition:opacity .35s ease!important;
+        transform:translateY(-50%)!important;
+      }
+    }
   `;
   document.head.appendChild(style);
 
-  let followTimer = null;
-  let userIsScrolling = false;
+  const lengthPicker = document.getElementById('lengthPicker');
+  const paceLabel = lengthPicker && lengthPicker.previousElementSibling && lengthPicker.previousElementSibling.classList.contains('eyebrow')
+    ? lengthPicker.previousElementSibling
+    : null;
+  if(paceLabel) paceLabel.classList.add('reader-pace-label');
 
-  function cancelReaderAdvance(){
-    if(followTimer !== null){
-      clearTimeout(followTimer);
-      followTimer = null;
+  function enterReaderMode(state){
+    panel.classList.add('reader-mode');
+    panel.scrollTop = 0;
+    state.boxEl.textContent = '';
+  }
+
+  function leaveReaderMode(){
+    panel.classList.remove('reader-mode');
+  }
+
+  function stagePassage(state, text){
+    const current = state.boxEl.querySelector('.reader-current');
+    const previous = state.boxEl.querySelector('.reader-previous');
+
+    if(previous){
+      previous.classList.remove('reader-previous');
+      previous.classList.add('reader-leaving');
+      setTimeout(() => previous.remove(), 3500);
     }
+
+    if(current){
+      current.classList.remove('reader-current');
+      current.classList.add('reader-previous');
+    }
+
+    const p = document.createElement('p');
+    p.textContent = text;
+    state.boxEl.appendChild(p);
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      p.classList.add('reader-current');
+    }));
   }
-
-  function markUserScroll(){
-    userIsScrolling = true;
-    cancelReaderAdvance();
-    clearTimeout(markUserScroll.timer);
-    markUserScroll.timer = setTimeout(() => {
-      userIsScrolling = false;
-    }, 1800);
-  }
-
-  function scheduleReaderAdvance(paragraph){
-    cancelReaderAdvance();
-    followTimer = setTimeout(() => {
-      followTimer = null;
-      if(userIsScrolling || !paragraph.isConnected) return;
-
-      const panelRect = panel.getBoundingClientRect();
-      const paragraphRect = paragraph.getBoundingClientRect();
-      const readingLine = panelRect.bottom - 118;
-
-      if(paragraphRect.bottom <= readingLine) return;
-
-      const needed = paragraphRect.bottom - readingLine;
-      const step = Math.min(Math.max(needed + 14, 48), 132);
-      panel.scrollBy({ top: step, left: 0, behavior: 'smooth' });
-    }, 1350);
-  }
-
-  panel.addEventListener('touchstart', markUserScroll, { passive:true });
-  panel.addEventListener('touchmove', markUserScroll, { passive:true });
-  panel.addEventListener('wheel', markUserScroll, { passive:true });
 
   advanceSession = function(state){
+    if(state.index === 0 && !panel.classList.contains('reader-mode')){
+      enterReaderMode(state);
+    }
+
     if(state.index >= state.paragraphs.length){
-      cancelReaderAdvance();
       state.statusEl.textContent = 'Session complete';
       state.playing = false;
       state.btnEl.textContent = '↺';
       stopBreathingLoop();
       chime();
       showReflection();
+      setTimeout(leaveReaderMode, 900);
       return;
     }
 
-    const p = document.createElement('p');
-    p.textContent = state.paragraphs[state.index];
-    p.style.opacity = '0';
-    p.style.transform = 'translateY(5px)';
-    p.style.transition = 'opacity 4.2s cubic-bezier(.22,.7,.25,1), transform 4.2s cubic-bezier(.22,.7,.25,1)';
-    state.boxEl.appendChild(p);
-
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      p.style.opacity = '1';
-      p.style.transform = 'translateY(0)';
-      scheduleReaderAdvance(p);
-    }));
+    stagePassage(state, state.paragraphs[state.index]);
 
     const progress = state.index / Math.max(1, state.paragraphs.length - 1);
     state.statusEl.textContent = progress < 0.22
@@ -157,8 +237,12 @@
   stopBreathingLoop = function(){
     breathing = false;
     clearTimeout(breathTimer);
-    cancelReaderAdvance();
     panel.classList.remove('breath-in','breath-hold','breath-out');
     panel.style.removeProperty('--breath-duration');
   };
+
+  const closeButton = panel.querySelector('.panel-close');
+  if(closeButton){
+    closeButton.addEventListener('click', leaveReaderMode);
+  }
 })();
