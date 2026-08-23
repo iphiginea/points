@@ -20,7 +20,7 @@
       content:'';
       position:absolute;
       inset:0;
-      z-index:0;
+      z-index:-1;
       pointer-events:none;
       opacity:0;
       transform:scale(1.018);
@@ -40,7 +40,6 @@
         opacity var(--breath-duration,1200ms) var(--breath-ease,cubic-bezier(.37,0,.63,1)),
         transform var(--breath-duration,1200ms) var(--breath-ease,cubic-bezier(.37,0,.63,1));
     }
-    .panel > *{position:relative;z-index:1;}
 
     .panel.breath-in{
       box-shadow:
