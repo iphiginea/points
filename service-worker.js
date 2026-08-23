@@ -1,6 +1,6 @@
 // Service worker for install support, offline fallback, and lightweight
 // compatibility/presentation patches applied to the current single-file app.
-const CACHE_NAME = 'points-shell-v6';
+const CACHE_NAME = 'points-shell-v7';
 const SHELL_FILES = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {
@@ -32,7 +32,7 @@ function polishHtml(input) {
   );
   html = html.replace(
     '<div class="eyebrow">Select a point</div>',
-    '<div class="eyebrow">What are you carrying today?</div>\n    <div class="figure-guide">Tap a point on the body or choose below.</div>',
+    '<div class="eyebrow">What are you carrying today?</div>\n    <div class="figure-guide">Tap a point on the body, or choose by feeling below.</div>',
   );
 
   html = html.replace(
@@ -70,6 +70,131 @@ function polishHtml(input) {
   html = html.replace(
     '0%,100%{ transform:scale(1); opacity:0.18; }\n    50%{ transform:scale(1.35); opacity:0.05; }',
     '0%,100%{ transform:scale(1); opacity:0.13; }\n    50%{ transform:scale(1.18); opacity:0.07; }',
+  );
+
+  // Refine the body map and make the feeling choices read like a quiet index,
+  // rather than a collection of filter pills.
+  html = html.replace('max-width:300px;', 'max-width:324px;');
+  html = html.replace(
+    '<div class="point-label">${p.category}</div>',
+    '<div class="point-label"><span>${p.category}</span><em>${p.name}</em></div>',
+  );
+  html = html.replace(
+    `  chip.className = 'chip';
+  chip.textContent = p.category;
+  chip.dataset.id = p.id;`,
+    `  chip.className = 'chip';
+  const categoryParts = p.category.split(' & ');
+  const feeling = categoryParts.shift();
+  const detail = categoryParts.join(' & ');
+  chip.innerHTML = '<span class="chip-copy"><span class="chip-feeling">' + feeling + '</span>' + (detail ? '<span class="chip-detail">' + detail + '</span>' : '') + '</span><span class="chip-point">' + p.name + '</span>';
+  chip.dataset.id = p.id;`,
+  );
+  html = html.replace(
+    '</style>',
+    `
+  /* ---------- Feeling index polish ---------- */
+  .figure-frame{
+    margin-top:2px;
+  }
+  .point-label{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1px;
+    padding:5px 8px 4px;
+    border:1px solid rgba(228,223,211,0.9);
+    box-shadow:0 4px 14px rgba(43,42,38,0.07);
+  }
+  .point-label span{
+    font-size:10.5px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .point-label em{
+    font-family:'Fraunces',serif;
+    font-size:10.5px;
+    font-weight:400;
+    color:var(--brass);
+  }
+  .point-index{
+    width:100%;
+    max-width:680px;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:0 22px;
+    justify-content:stretch;
+    margin-top:24px;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+  }
+  .chip{
+    width:100%;
+    min-width:0;
+    min-height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:10px 5px;
+    border:0;
+    border-bottom:1px solid var(--line);
+    border-radius:0;
+    background:transparent;
+    color:var(--ink);
+    text-align:left;
+    transition:background .18s ease, padding .18s ease, border-color .18s ease;
+  }
+  .chip-copy{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+  .chip-feeling{
+    font-size:13px;
+    font-weight:600;
+    line-height:1.25;
+    color:var(--ink);
+  }
+  .chip-detail{
+    font-size:11.5px;
+    font-weight:500;
+    line-height:1.25;
+    color:var(--ink-faint);
+  }
+  .chip-point{
+    flex-shrink:0;
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:12px;
+    color:var(--brass);
+  }
+  .chip:hover{
+    border-color:var(--line);
+    background:rgba(220,227,217,0.34);
+    color:var(--ink);
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .chip.active{
+    background:var(--sage-tint);
+    border-color:var(--sage-tint);
+    color:var(--ink);
+    padding-left:10px;
+    padding-right:10px;
+  }
+  .chip.active .chip-feeling{ color:var(--sage-deep); }
+  .chip.active .chip-point{ color:var(--sage-deep); }
+  @media (max-width:520px){
+    .figure-wrap{ padding-left:16px; padding-right:16px; }
+    .point-index{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 10px; }
+    .chip{ min-height:62px; gap:6px; padding:10px 4px; }
+    .chip-point{ display:none; }
+    .chip-feeling{ font-size:12.5px; }
+    .chip-detail{ font-size:11px; }
+  }
+</style>`,
   );
 
   // Clean up session-panel hierarchy and remove the repeated category label.
