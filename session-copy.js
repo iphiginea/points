@@ -4,51 +4,51 @@
   if (typeof POINTS === 'undefined' || !Array.isArray(POINTS)) return;
 
   const SESSION_COPY = {
-  "shenmen": {
-    "why": "In ear acupuncture traditions, Shén Mén, or Spirit Gate, is often used as a settling point. Here it becomes a focus for guided self-hypnosis when attention feels crowded or overstimulated.",
-    "script": "Get comfortable enough that you can stop adjusting for a little while.\n\nIf it feels comfortable, let your eyes close. If not, soften your gaze and choose one unmoving place to look.\n\nFor the next few moments, you do not need to make anything happen. Hypnosis can be very simple. It can be the feeling of letting one small point become more important than everything around it.\n\nBring your attention to Shén Mén, Spirit Gate, near the upper part of the ear.\n\nYou can touch the area lightly, or simply imagine a small point there.\n\nNow count down with me from five.\n\nFive. Notice the point.\n\nFour. Let the room become a little less important.\n\nThree. Let your breathing find its own slower rhythm.\n\nTwo. Imagine a small gate at that point, resting slightly open.\n\nOne. Let your attention pass through.\n\nOn the other side of that gate, imagine a quiet room with nothing waiting for you. No messages. No unfinished tasks. No one asking for anything.\n\nA thought may enter. Let it appear.\n\nThen imagine placing it outside the gate for now.\n\nAnother thought may come. Place that one outside too.\n\nYou are not getting rid of anything. You are choosing what gets your attention in this moment.\n\nEach time you notice Shén Mén, let the gate open a little more.\n\nEach time you breathe out, let the space inside feel a little quieter.\n\nStay here for three slow breaths.\n\nOne breath for what can wait.\n\nOne breath for what does not need solving yet.\n\nOne breath for the simple fact that you are here.\n\nIn a moment, I will count from one to three.\n\nOne. Feel the weight of your body.\n\nTwo. Notice the room around you.\n\nThree. Let your eyes open when you are ready, bringing the quieter pace with you."
-  },
-  "anmian": {
-    "why": "Ānmián means Peaceful Sleep and is traditionally associated with the transition from wakefulness into rest. Here it becomes a hypnotic focus for letting attention drift away from the day.",
-    "script": "Settle into bed, or wherever you plan to rest.\n\nLet your eyes close.\n\nBring your attention to the soft area just behind and below the ear, near the base of the skull. This is Ānmián, Peaceful Sleep.\n\nYou do not need to press it. Just imagine that one small place becoming warmer and easier to notice.\n\nAs you breathe out, imagine the warmth spreading down the neck.\n\nAcross the shoulders.\n\nInto the arms.\n\nAnd with each breath, let the edges of your attention become less sharp.\n\nI will count from five down to one.\n\nFive. The mattress is holding your weight.\n\nFour. Your jaw can loosen.\n\nThree. Your shoulders can sink.\n\nTwo. Thoughts can become farther away.\n\nOne. Nothing else needs your attention right now.\n\nIf a thought appears, imagine hearing it from another room.\n\nYou do not have to answer it.\n\nYou do not have to finish it.\n\nYou can let it grow quieter simply because you are no longer following it.\n\nReturn to Ānmián.\n\nWarmth behind the ear.\n\nWeight beneath the body.\n\nBreath moving without effort.\n\nEach time your mind wanders, let the point bring you back toward the feeling of being held.\n\nAnd if you notice yourself drifting, you do not need to come back for the rest of the words.\n\nYou can let the words become part of the background.\n\nYou can let the point fade too.\n\nAnd you can sleep whenever sleep arrives."
-  },
-  "yintang": {
-    "why": "Located between the eyebrows, Yìn Táng is traditionally associated with quieting mental activity. Here it becomes a focus for hypnotic narrowing when thoughts feel repetitive or hard to leave alone.",
-    "script": "Let your eyes close, or lower your gaze.\n\nBring your attention to the space between your eyebrows. This is Yìn Táng, Hall of Impression.\n\nYou do not need to touch it. Imagine a small, warm point of light resting there.\n\nFor a moment, let that point be the only thing you need to notice.\n\nNow breathe in.\n\nAs you breathe out, imagine the light becoming softer and slightly wider.\n\nAgain.\n\nIn.\n\nOut, and wider.\n\nI will count down from five.\n\nFive. Notice the light.\n\nFour. Notice the muscles around it.\n\nThree. Let the brow smooth.\n\nTwo. Let the eyes rest behind the eyelids.\n\nOne. Let the thought stream move farther into the background.\n\nA worry may still be there.\n\nYou do not need to argue with it.\n\nYou do not need to replace it with a better thought.\n\nLet the worry stay in the background while Yìn Táng stays in the foreground.\n\nForeground, the warm point.\n\nBackground, everything else.\n\nEach time a thought tries to become urgent, quietly return to the point.\n\nNo force.\n\nNo correction.\n\nJust return.\n\nThe mind can keep making thoughts while you stop following every one.\n\nStay with that for three breaths.\n\nThen let the point of light become smaller again.\n\nNotice your face.\n\nNotice your body.\n\nNotice the room.\n\nOpen your eyes when you are ready."
-  },
-  "hegu": {
-    "why": "Hé Gǔ, or Union Valley, is a well known hand point traditionally associated with tension and physical discomfort. Here it becomes a tactile anchor for hypnotic relaxation.",
-    "script": "Find the soft web between your thumb and index finger on either hand.\n\nTouch it lightly if that feels comfortable.\n\nThis is Hé Gǔ, Union Valley.\n\nLet your attention narrow until the sensation beneath your fingers feels unusually clear.\n\nTemperature.\n\nPressure.\n\nTexture.\n\nNothing else needs to be as vivid right now.\n\nTake a slow breath in.\n\nAs you breathe out, imagine the small area beneath your fingers becoming heavier.\n\nI will count from five down to one.\n\nFive. The hand softens.\n\nFour. The forearm loosens.\n\nThree. The shoulders drop.\n\nTwo. The jaw releases.\n\nOne. The whole body can use a little less effort.\n\nNow imagine that the softness at Hé Gǔ can spread.\n\nNot because the point is doing anything to you, but because your attention knows the route.\n\nFrom the hand to the forearm.\n\nFrom the forearm to the shoulder.\n\nFrom the shoulder to the jaw.\n\nEach exhale becomes a cue.\n\nLess grip.\n\nLess lift.\n\nLess bracing.\n\nNotice one place that is still working harder than it needs to.\n\nOn the next breath out, let that place reduce its effort by one degree.\n\nThat is enough.\n\nAgain, one degree.\n\nAnd once more.\n\nWhen you are ready, loosen your fingers from the point.\n\nKeep the hand soft.\n\nLet your eyes open, and notice what it feels like to move without immediately taking all the tension back."
-  },
-  "neiguan": {
-    "why": "Nèi Guān, or Inner Gate, is a wrist point traditionally used when the body feels unsettled or rushed. Here it becomes a steady hypnotic anchor for returning attention to the present.",
-    "script": "Turn one wrist so your palm faces up.\n\nAbout three finger widths below the wrist crease, between the two tendons, is Nèi Guān, Inner Gate.\n\nRest two fingers there lightly.\n\nLet your eyes close if that feels comfortable.\n\nWhen everything feels fast, hypnosis does not need to make you feel dramatically different.\n\nIt can simply give your attention one thing that is not moving.\n\nThe contact of your fingers at the wrist.\n\nNotice that contact now.\n\nI will count down from five.\n\nFive. Fingers on the wrist.\n\nFour. Feet or body supported beneath you.\n\nThree. Air touching the skin.\n\nTwo. Breath moving in and out.\n\nOne. This moment, exactly as it is.\n\nIf your attention rushes ahead, return to the wrist.\n\nIf a sensation becomes loud, return to the wrist.\n\nIf a thought says something has to happen immediately, return to the wrist.\n\nEach return is the practice.\n\nYou do not have to force the body into calm.\n\nYou are giving it a steady point to organize around.\n\nFor the next three breaths, silently repeat:\n\nHere.\n\nNow.\n\nThis point.\n\nHere.\n\nNow.\n\nThis point.\n\nHere.\n\nNow.\n\nThis point.\n\nIn a moment, let your fingers lift away.\n\nNotice that the point can remain in your attention even after the touch is gone.\n\nOpen your eyes when you are ready."
-  },
-  "baihui": {
-    "why": "At the crown of the head, Bǎi Huì, or Hundred Meetings, is traditionally described as a place where many pathways meet. Here it becomes a hypnotic focus for gathering scattered attention.",
-    "script": "Bring your attention to the crown of your head, roughly where a line rising from each ear would meet.\n\nThis is Bǎi Huì, Hundred Meetings.\n\nImagine a very fine thread attached to that point.\n\nThe thread is not pulling you up.\n\nIt is simply giving your attention one vertical line to follow.\n\nLet your eyes close.\n\nNotice the thread.\n\nThen notice the crown.\n\nThen notice the length of the spine beneath it.\n\nI will count down from five.\n\nFive. Many thoughts.\n\nFour. Fewer threads to follow.\n\nThree. One line.\n\nTwo. One point.\n\nOne. Bǎi Huì.\n\nNow let one unfinished thought appear.\n\nNotice it without entering it.\n\nImagine drawing only the attention you gave it back toward the crown.\n\nThe thought can remain where it is.\n\nYour attention comes back.\n\nChoose another thought.\n\nSame thing.\n\nLet the thought stay.\n\nBring the attention back.\n\nYou are not clearing your mind.\n\nYou are practicing the ability to return.\n\nAgain.\n\nOne point.\n\nOne thread.\n\nOne place for attention to meet.\n\nStay with that simplicity for three breaths.\n\nLater, when your attention feels scattered, you can remember the sensation of one thread rising from the crown.\n\nFor now, notice your whole body again.\n\nOpen your eyes when you are ready, and carry one thread of attention into whatever comes next."
-  },
-  "taichong": {
-    "why": "Tài Chōng, or Great Surge, is a foot point traditionally associated with frustration and pent up feeling. Here it becomes a hypnotic focus for letting emotion move through imagery without needing to act on it.",
-    "script": "Let your feet rest on the floor if they can.\n\nBring your attention to the top of one foot, near the space between the big toe and second toe.\n\nThis is Tài Chōng, Great Surge.\n\nLet your eyes close.\n\nNotice the contact between your foot and whatever is beneath it.\n\nNow let the feeling you came in with have a shape.\n\nIt does not have to be accurate.\n\nMaybe frustration feels like pressure.\n\nMaybe heat.\n\nMaybe a wave.\n\nMaybe simply a color.\n\nChoose whatever comes first.\n\nI will count from five down to one.\n\nFive. Notice the feeling.\n\nFour. Give it a shape.\n\nThree. Let it be present without explaining it.\n\nTwo. Notice the foot.\n\nOne. Let the image begin to move.\n\nIf it is pressure, imagine it spreading out.\n\nIf it is heat, imagine it cooling at the edges.\n\nIf it is a wave, imagine it reaching the shore and receding.\n\nYou are not pushing the feeling away.\n\nYou are letting your imagination show you that a feeling can change form while you remain still.\n\nBring attention back to Tài Chōng.\n\nThe point stays where it is.\n\nThe feeling can move.\n\nAgain, the point stays.\n\nThe feeling can move.\n\nNotice your jaw.\n\nLet it soften.\n\nNotice your hands.\n\nLet them rest.\n\nNotice the floor.\n\nLet it hold your weight.\n\nTake three slow breaths with the idea that you do not have to act on a feeling at the exact moment you feel it.\n\nThen let your eyes open.\n\nGive yourself one quiet second before deciding what comes next."
-  },
-  "zusanli": {
-    "why": "Zú Sān Lǐ, or Leg Three Miles, has a long traditional association with stamina. Here its name becomes a hypnotic suggestion for finding enough readiness for one next step.",
-    "script": "Bring your attention to your leg, about four finger widths below the kneecap and just outside the shinbone.\n\nThis is Zú Sān Lǐ, Leg Three Miles.\n\nIts name carries an old image: enough for a little farther.\n\nNot the whole road.\n\nJust the next stretch.\n\nLet your eyes close.\n\nImagine a small point of warmth at Zú Sān Lǐ.\n\nYou do not need to create a strong sensation. A suggestion is enough.\n\nI will count down from five.\n\nFive. Notice the point.\n\nFour. Imagine warmth.\n\nThree. Let the warmth spread through the lower leg.\n\nTwo. Let it rise toward the knee.\n\nOne. Let the idea of movement become a little easier to picture.\n\nNow think of one thing you need to begin.\n\nOnly one.\n\nMake it smaller.\n\nThen smaller again.\n\nUntil you can picture the first physical action.\n\nStanding up.\n\nOpening the document.\n\nPutting on the shoes.\n\nSending the first message.\n\nWhatever the first inch is.\n\nHold that image while you notice Zú Sān Lǐ.\n\nPoint and action.\n\nPoint and action.\n\nLet them become linked in your mind.\n\nLater, if you choose, remembering this point can remind you that beginning does not require enough energy for everything.\n\nOnly enough for the first step.\n\nTake one more breath.\n\nSee the first action clearly.\n\nThen open your eyes and let the rest of the road remain out of frame."
-  },
-  "tanzhong": {
-    "why": "At the center of the chest, Tán Zhōng, or Sea of Tranquility, is traditionally associated with emotional heaviness. Here it becomes a hypnotic place to let grief be held without asking it to disappear.",
-    "script": "Rest one hand at the center of your chest, wherever it feels comfortable.\n\nThis is Tán Zhōng, Sea of Tranquility.\n\nLet your eyes close if that feels safe.\n\nFeel the weight and warmth of your hand.\n\nFor this practice, nothing has to improve.\n\nNothing has to be released.\n\nNothing has to make sense.\n\nYour only task is to let the hand stay.\n\nI will count down from five.\n\nFive. Hand on the chest.\n\nFour. Breath beneath the hand.\n\nThree. The room becoming quieter around the edges.\n\nTwo. The feeling allowed to be exactly its current size.\n\nOne. You do not have to move away from it.\n\nNow imagine that the space beneath your hand is a small room.\n\nThe feeling can sit there.\n\nYou do not have to carry it from room to room.\n\nYou do not have to question it.\n\nYou can simply sit beside it.\n\nBreathe in.\n\nLet what is here be here.\n\nBreathe out.\n\nLet your hand keep it company.\n\nAgain.\n\nNo performance.\n\nNo lesson.\n\nNo requirement to feel better.\n\nIf tears come, let them come.\n\nIf nothing happens, let nothing happen.\n\nStay with the warmth of your hand for three more breaths.\n\nWhen you are ready, lower your hand slowly.\n\nIn a moment, open your eyes.\n\nBring the feeling with you if it is still here.\n\nThe practice is not measured by whether it left."
-  },
-  "laogong": {
-    "why": "Láo Gōng, or Palace of Labor, sits at the center of the palm and is traditionally associated with cooling agitation. Here it becomes a hypnotic sensory anchor for grounding attention.",
-    "script": "Turn one palm face up.\n\nBring your attention to its center.\n\nThis is Láo Gōng, Palace of Labor.\n\nLet your eyes close.\n\nNotice whatever is actually present in the palm.\n\nWarmth.\n\nCoolness.\n\nTingling.\n\nPressure.\n\nOr almost nothing.\n\nChoose one sensation and let it become the center of your attention.\n\nI will count down from five.\n\nFive. Surface of the skin.\n\nFour. Weight of the hand.\n\nThree. Temperature in the palm.\n\nTwo. The arm becoming heavier.\n\nOne. The hand resting completely.\n\nNow imagine the palm becoming slightly heavier with each breath out.\n\nNot numb.\n\nNot stuck.\n\nJust pleasantly weighted.\n\nAs if gravity has become easier to notice.\n\nBreathe in and notice the center of the palm.\n\nBreathe out and imagine the weight moving downward.\n\nAgain.\n\nCenter.\n\nWeight.\n\nDown.\n\nLet those three ideas repeat until the rest of the room feels farther away.\n\nCenter.\n\nWeight.\n\nDown.\n\nIf your mind races off, do not chase it.\n\nReturn to the palm.\n\nThe hand is here.\n\nThe body is here.\n\nThe floor is beneath you.\n\nStay with that simple sequence for three breaths.\n\nThen rub your fingertips together gently.\n\nNotice the texture.\n\nOpen your eyes when you are ready, bringing the sense of weight and contact back into the room."
-  },
-  "zhongwan": {
-    "why": "Zhōng Wǎn, or Middle Cavity, is an upper abdominal point traditionally associated with digestion. Here it becomes a hypnotic focus for making more space around the physical sensations that can accompany worry.",
-    "script": "Rest one or both hands on your upper abdomen, midway between the breastbone and the navel.\n\nThis is Zhōng Wǎn, Middle Cavity.\n\nLet your eyes close if that feels comfortable.\n\nNotice what is beneath your hands.\n\nMaybe tightness.\n\nMaybe fluttering.\n\nMaybe fullness.\n\nMaybe only the movement of breath.\n\nYou do not need to decide what the sensation means.\n\nFor now, sensation is enough.\n\nI will count down from five.\n\nFive. Hands on the abdomen.\n\nFour. Breath moving beneath them.\n\nThree. Muscles allowed to stop holding quite so firmly.\n\nTwo. More room around the sensation.\n\nOne. Nothing to solve right now.\n\nImagine that whatever feels tight does not need to be pulled open.\n\nInstead, imagine the space around it becoming wider.\n\nMore room in front of it.\n\nMore room behind it.\n\nMore room around the edges.\n\nThe sensation can stay exactly where it is while the space around it changes.\n\nBreathe in and imagine room.\n\nBreathe out and imagine less bracing.\n\nAgain.\n\nRoom.\n\nLess bracing.\n\nIf the mind starts searching for an explanation, return to three simple facts.\n\nHands.\n\nBelly.\n\nBreath.\n\nHands.\n\nBelly.\n\nBreath.\n\nStay with that repetition for three more rounds.\n\nThen let your hands fall away.\n\nNotice what is present without deciding whether it is better or worse.\n\nOpen your eyes when you are ready."
-  }
-};
+    "shenmen": {
+      "why": "In ear acupuncture traditions, Shén Mén, or Spirit Gate, is often used as a settling point. Here it becomes a focus for guided self-hypnosis when attention feels crowded or overstimulated.",
+      "script": "Get comfortable enough that you can stop adjusting for a little while.\n\nIf it feels comfortable, let your eyes close. If not, soften your gaze and choose one unmoving place to look.\n\nFor the next few moments, you do not need to make anything happen. Hypnosis can be very simple. It can be the feeling of letting one small point become more important than everything around it.\n\nBring your attention to Shén Mén, Spirit Gate, near the upper part of the ear.\n\nYou can touch the area lightly, or simply imagine a small point there.\n\nNow count down with me from five.\n\nFive. Notice the point.\n\nFour. Let the room become a little less important.\n\nThree. Let your breathing find its own slower rhythm.\n\nTwo. Imagine a small gate at that point, resting slightly open.\n\nOne. Let your attention pass through.\n\nOn the other side of that gate, imagine a quiet room with nothing waiting for you. No messages. No unfinished tasks. No one asking for anything.\n\nA thought may enter. Let it appear.\n\nThen imagine placing it outside the gate for now.\n\nAnother thought may come. Place that one outside too.\n\nYou are not getting rid of anything. You are choosing what gets your attention in this moment.\n\nEach time you notice Shén Mén, let the gate open a little more.\n\nEach time you breathe out, let the space inside feel a little quieter.\n\nStay here for three slow breaths.\n\nOne breath for what can wait.\n\nOne breath for what does not need solving yet.\n\nOne breath for the simple fact that you are here.\n\nIn a moment, I will count from one to three.\n\nOne. Feel the weight of your body.\n\nTwo. Notice the room around you.\n\nThree. Let your eyes open when you are ready, bringing the quieter pace with you."
+    },
+    "anmian": {
+      "why": "Ānmián means Peaceful Sleep and is traditionally associated with the transition from wakefulness into rest. Here it becomes a hypnotic focus for letting attention drift away from the day.",
+      "script": "Settle into bed, or wherever you plan to rest.\n\nLet your eyes close.\n\nBring your attention to the soft area just behind and below the ear, near the base of the skull. This is Ānmián, Peaceful Sleep.\n\nYou do not need to press it. Just imagine that one small place becoming warmer and easier to notice.\n\nAs you breathe out, imagine the warmth spreading down the neck.\n\nAcross the shoulders.\n\nInto the arms.\n\nAnd with each breath, let the edges of your attention become less sharp.\n\nI will count from five down to one.\n\nFive. The mattress is holding your weight.\n\nFour. Your jaw can loosen.\n\nThree. Your shoulders can sink.\n\nTwo. Thoughts can become farther away.\n\nOne. Nothing else needs your attention right now.\n\nIf a thought appears, imagine hearing it from another room.\n\nYou do not have to answer it.\n\nYou do not have to finish it.\n\nYou can let it grow quieter simply because you are no longer following it.\n\nReturn to Ānmián.\n\nWarmth behind the ear.\n\nWeight beneath the body.\n\nBreath moving without effort.\n\nEach time your mind wanders, let the point bring you back toward the feeling of being held.\n\nAnd if you notice yourself drifting, you do not need to come back for the rest of the words.\n\nYou can let the words become part of the background.\n\nYou can let the point fade too.\n\nAnd you can sleep whenever sleep arrives."
+    },
+    "yintang": {
+      "why": "Located between the eyebrows, Yìn Táng is traditionally associated with quieting mental activity. Here it becomes a focus for hypnotic narrowing when thoughts feel repetitive or hard to leave alone.",
+      "script": "Let your eyes close, or lower your gaze.\n\nBring your attention to the space between your eyebrows. This is Yìn Táng, Hall of Impression.\n\nYou do not need to touch it. Imagine a small, warm point of light resting there.\n\nFor a moment, let that point be the only thing you need to notice.\n\nNow breathe in.\n\nAs you breathe out, imagine the light becoming softer and slightly wider.\n\nAgain.\n\nIn.\n\nOut, and wider.\n\nI will count down from five.\n\nFive. Notice the light.\n\nFour. Notice the muscles around it.\n\nThree. Let the brow smooth.\n\nTwo. Let the eyes rest behind the eyelids.\n\nOne. Let the thought stream move farther into the background.\n\nA worry may still be there.\n\nYou do not need to argue with it.\n\nYou do not need to replace it with a better thought.\n\nLet the worry stay in the background while Yìn Táng stays in the foreground.\n\nForeground, the warm point.\n\nBackground, everything else.\n\nEach time a thought tries to become urgent, quietly return to the point.\n\nNo force.\n\nNo correction.\n\nJust return.\n\nThe mind can keep making thoughts while you stop following every one.\n\nStay with that for three breaths.\n\nThen let the point of light become smaller again.\n\nNotice your face.\n\nNotice your body.\n\nNotice the room.\n\nOpen your eyes when you are ready."
+    },
+    "hegu": {
+      "why": "Hé Gǔ, or Union Valley, is a well known hand point traditionally associated with tension and physical discomfort. Here it becomes a tactile anchor for hypnotic relaxation.",
+      "script": "Find the soft web between your thumb and index finger on either hand.\n\nTouch it lightly if that feels comfortable.\n\nThis is Hé Gǔ, Union Valley.\n\nLet your attention narrow until the sensation beneath your fingers feels unusually clear.\n\nTemperature.\n\nPressure.\n\nTexture.\n\nNothing else needs to be as vivid right now.\n\nTake a slow breath in.\n\nAs you breathe out, imagine the small area beneath your fingers becoming heavier.\n\nI will count from five down to one.\n\nFive. The hand softens.\n\nFour. The forearm loosens.\n\nThree. The shoulders drop.\n\nTwo. The jaw releases.\n\nOne. The whole body can use a little less effort.\n\nNow imagine that the softness at Hé Gǔ can spread.\n\nNot because the point is doing anything to you, but because your attention knows the route.\n\nFrom the hand to the forearm.\n\nFrom the forearm to the shoulder.\n\nFrom the shoulder to the jaw.\n\nEach exhale becomes a cue.\n\nLess grip.\n\nLess lift.\n\nLess bracing.\n\nNotice one place that is still working harder than it needs to.\n\nOn the next breath out, let that place reduce its effort by one degree.\n\nThat is enough.\n\nAgain, one degree.\n\nAnd once more.\n\nWhen you are ready, loosen your fingers from the point.\n\nKeep the hand soft.\n\nLet your eyes open, and notice what it feels like to move without immediately taking all the tension back."
+    },
+    "neiguan": {
+      "why": "Nèi Guān, or Inner Gate, is a wrist point traditionally used when the body feels unsettled or rushed. Here it becomes a steady hypnotic anchor for returning attention to the present.",
+      "script": "Turn one wrist so your palm faces up.\n\nAbout three finger widths below the wrist crease, between the two tendons, is Nèi Guān, Inner Gate.\n\nRest two fingers there lightly.\n\nLet your eyes close if that feels comfortable.\n\nWhen everything feels fast, hypnosis does not need to make you feel dramatically different.\n\nIt can simply give your attention one thing that is not moving.\n\nThe contact of your fingers at the wrist.\n\nNotice that contact now.\n\nI will count down from five.\n\nFive. Fingers on the wrist.\n\nFour. Feet or body supported beneath you.\n\nThree. Air touching the skin.\n\nTwo. Breath moving in and out.\n\nOne. This moment, exactly as it is.\n\nIf your attention rushes ahead, return to the wrist.\n\nIf a sensation becomes loud, return to the wrist.\n\nIf a thought says something has to happen immediately, return to the wrist.\n\nEach return is the practice.\n\nYou do not have to force the body into calm.\n\nYou are giving it a steady point to organize around.\n\nFor the next three breaths, silently repeat:\n\nHere.\n\nNow.\n\nThis point.\n\nHere.\n\nNow.\n\nThis point.\n\nHere.\n\nNow.\n\nThis point.\n\nIn a moment, let your fingers lift away.\n\nNotice that the point can remain in your attention even after the touch is gone.\n\nOpen your eyes when you are ready."
+    },
+    "baihui": {
+      "why": "At the crown of the head, Bǎi Huì, or Hundred Meetings, is traditionally described as a place where many pathways meet. Here it becomes a hypnotic focus for gathering scattered attention.",
+      "script": "Bring your attention to the crown of your head, roughly where a line rising from each ear would meet.\n\nThis is Bǎi Huì, Hundred Meetings.\n\nImagine a very fine thread attached to that point.\n\nThe thread is not pulling you up.\n\nIt is simply giving your attention one vertical line to follow.\n\nLet your eyes close.\n\nNotice the thread.\n\nThen notice the crown.\n\nThen notice the length of the spine beneath it.\n\nI will count down from five.\n\nFive. Many thoughts.\n\nFour. Fewer threads to follow.\n\nThree. One line.\n\nTwo. One point.\n\nOne. Bǎi Huì.\n\nNow let one unfinished thought appear.\n\nNotice it without entering it.\n\nImagine drawing only the attention you gave it back toward the crown.\n\nThe thought can remain where it is.\n\nYour attention comes back.\n\nChoose another thought.\n\nSame thing.\n\nLet the thought stay.\n\nBring the attention back.\n\nYou are not clearing your mind.\n\nYou are practicing the ability to return.\n\nAgain.\n\nOne point.\n\nOne thread.\n\nOne place for attention to meet.\n\nStay with that simplicity for three breaths.\n\nLater, when your attention feels scattered, you can remember the sensation of one thread rising from the crown.\n\nFor now, notice your whole body again.\n\nOpen your eyes when you are ready, and carry one thread of attention into whatever comes next."
+    },
+    "taichong": {
+      "why": "Tài Chōng, or Great Surge, is a foot point traditionally associated with frustration and pent up feeling. Here it becomes a hypnotic focus for letting emotion move through imagery without needing to act on it.",
+      "script": "Let your feet rest on the floor if they can.\n\nBring your attention to the top of one foot, near the space between the big toe and second toe.\n\nThis is Tài Chōng, Great Surge.\n\nLet your eyes close.\n\nNotice the contact between your foot and whatever is beneath it.\n\nNow let the feeling you came in with have a shape.\n\nIt does not have to be accurate.\n\nMaybe frustration feels like pressure.\n\nMaybe heat.\n\nMaybe a wave.\n\nMaybe simply a color.\n\nChoose whatever comes first.\n\nI will count from five down to one.\n\nFive. Notice the feeling.\n\nFour. Give it a shape.\n\nThree. Let it be present without explaining it.\n\nTwo. Notice the foot.\n\nOne. Let the image begin to move.\n\nIf it is pressure, imagine it spreading out.\n\nIf it is heat, imagine it cooling at the edges.\n\nIf it is a wave, imagine it reaching the shore and receding.\n\nYou are not pushing the feeling away.\n\nYou are letting your imagination show you that a feeling can change form while you remain still.\n\nBring attention back to Tài Chōng.\n\nThe point stays where it is.\n\nThe feeling can move.\n\nAgain, the point stays.\n\nThe feeling can move.\n\nNotice your jaw.\n\nLet it soften.\n\nNotice your hands.\n\nLet them rest.\n\nNotice the floor.\n\nLet it hold your weight.\n\nTake three slow breaths with the idea that you do not have to act on a feeling at the exact moment you feel it.\n\nThen let your eyes open.\n\nGive yourself one quiet second before deciding what comes next."
+    },
+    "zusanli": {
+      "why": "Zú Sān Lǐ, or Leg Three Miles, has a long traditional association with stamina. Here its name becomes a hypnotic suggestion for finding enough readiness for one next step.",
+      "script": "Bring your attention to your leg, about four finger widths below the kneecap and just outside the shinbone.\n\nThis is Zú Sān Lǐ, Leg Three Miles.\n\nIts name carries an old image: enough for a little farther.\n\nNot the whole road.\n\nJust the next stretch.\n\nLet your eyes close.\n\nImagine a small point of warmth at Zú Sān Lǐ.\n\nYou do not need to create a strong sensation. A suggestion is enough.\n\nI will count down from five.\n\nFive. Notice the point.\n\nFour. Imagine warmth.\n\nThree. Let the warmth spread through the lower leg.\n\nTwo. Let it rise toward the knee.\n\nOne. Let the idea of movement become a little easier to picture.\n\nNow think of one thing you need to begin.\n\nOnly one.\n\nMake it smaller.\n\nThen smaller again.\n\nUntil you can picture the first physical action.\n\nStanding up.\n\nOpening the document.\n\nPutting on the shoes.\n\nSending the first message.\n\nWhatever the first inch is.\n\nHold that image while you notice Zú Sān Lǐ.\n\nPoint and action.\n\nPoint and action.\n\nLet them become linked in your mind.\n\nLater, if you choose, remembering this point can remind you that beginning does not require enough energy for everything.\n\nOnly enough for the first step.\n\nTake one more breath.\n\nSee the first action clearly.\n\nThen open your eyes and let the rest of the road remain out of frame."
+    },
+    "tanzhong": {
+      "why": "At the center of the chest, Tán Zhōng, or Sea of Tranquility, is traditionally associated with emotional heaviness. Here it becomes a hypnotic place to let grief be held without asking it to disappear.",
+      "script": "Rest one hand at the center of your chest, wherever it feels comfortable.\n\nThis is Tán Zhōng, Sea of Tranquility.\n\nLet your eyes close if that feels safe.\n\nFeel the weight and warmth of your hand.\n\nFor this practice, nothing has to improve.\n\nNothing has to be released.\n\nNothing has to make sense.\n\nYour only task is to let the hand stay.\n\nI will count down from five.\n\nFive. Hand on the chest.\n\nFour. Breath beneath the hand.\n\nThree. The room becoming quieter around the edges.\n\nTwo. The feeling allowed to be exactly its current size.\n\nOne. You do not have to move away from it.\n\nNow imagine that the space beneath your hand is a small room.\n\nThe feeling can sit there.\n\nYou do not have to carry it from room to room.\n\nYou do not have to question it.\n\nYou can simply sit beside it.\n\nBreathe in.\n\nLet what is here be here.\n\nBreathe out.\n\nLet your hand keep it company.\n\nAgain.\n\nNo performance.\n\nNo lesson.\n\nNo requirement to feel better.\n\nIf tears come, let them come.\n\nIf nothing happens, let nothing happen.\n\nStay with the warmth of your hand for three more breaths.\n\nWhen you are ready, lower your hand slowly.\n\nIn a moment, open your eyes.\n\nBring the feeling with you if it is still here.\n\nThe practice is not measured by whether it left."
+    },
+    "laogong": {
+      "why": "Láo Gōng, or Palace of Labor, sits at the center of the palm and is traditionally associated with cooling agitation. Here it becomes a hypnotic sensory anchor for grounding attention.",
+      "script": "Turn one palm face up.\n\nBring your attention to its center.\n\nThis is Láo Gōng, Palace of Labor.\n\nLet your eyes close.\n\nNotice whatever is actually present in the palm.\n\nWarmth.\n\nCoolness.\n\nTingling.\n\nPressure.\n\nOr almost nothing.\n\nChoose one sensation and let it become the center of your attention.\n\nI will count down from five.\n\nFive. Surface of the skin.\n\nFour. Weight of the hand.\n\nThree. Temperature in the palm.\n\nTwo. The arm becoming heavier.\n\nOne. The hand resting completely.\n\nNow imagine the palm becoming slightly heavier with each breath out.\n\nNot numb.\n\nNot stuck.\n\nJust pleasantly weighted.\n\nAs if gravity has become easier to notice.\n\nBreathe in and notice the center of the palm.\n\nBreathe out and imagine the weight moving downward.\n\nAgain.\n\nCenter.\n\nWeight.\n\nDown.\n\nLet those three ideas repeat until the rest of the room feels farther away.\n\nCenter.\n\nWeight.\n\nDown.\n\nIf your mind races off, do not chase it.\n\nReturn to the palm.\n\nThe hand is here.\n\nThe body is here.\n\nThe floor is beneath you.\n\nStay with that simple sequence for three breaths.\n\nThen rub your fingertips together gently.\n\nNotice the texture.\n\nOpen your eyes when you are ready, bringing the sense of weight and contact back into the room."
+    },
+    "zhongwan": {
+      "why": "Zhōng Wǎn, or Middle Cavity, is an upper abdominal point traditionally associated with digestion. Here it becomes a hypnotic focus for making more space around the physical sensations that can accompany worry.",
+      "script": "Rest one or both hands on your upper abdomen, midway between the breastbone and the navel.\n\nThis is Zhōng Wǎn, Middle Cavity.\n\nLet your eyes close if that feels comfortable.\n\nNotice what is beneath your hands.\n\nMaybe tightness.\n\nMaybe fluttering.\n\nMaybe fullness.\n\nMaybe only the movement of breath.\n\nYou do not need to decide what the sensation means.\n\nFor now, sensation is enough.\n\nI will count down from five.\n\nFive. Hands on the abdomen.\n\nFour. Breath moving beneath them.\n\nThree. Muscles allowed to stop holding quite so firmly.\n\nTwo. More room around the sensation.\n\nOne. Nothing to solve right now.\n\nImagine that whatever feels tight does not need to be pulled open.\n\nInstead, imagine the space around it becoming wider.\n\nMore room in front of it.\n\nMore room behind it.\n\nMore room around the edges.\n\nThe sensation can stay exactly where it is while the space around it changes.\n\nBreathe in and imagine room.\n\nBreathe out and imagine less bracing.\n\nAgain.\n\nRoom.\n\nLess bracing.\n\nIf the mind starts searching for an explanation, return to three simple facts.\n\nHands.\n\nBelly.\n\nBreath.\n\nHands.\n\nBelly.\n\nBreath.\n\nStay with that repetition for three more rounds.\n\nThen let your hands fall away.\n\nNotice what is present without deciding whether it is better or worse.\n\nOpen your eyes when you are ready."
+    }
+  };
 
   POINTS.forEach((point) => {
     const copy = SESSION_COPY[point.id];
@@ -56,4 +56,179 @@
     point.why = copy.why;
     point.script = copy.script;
   });
+
+  // Make the active session feel like a single, immersive hypnosis surface.
+  const experienceStyle = document.createElement('style');
+  experienceStyle.textContent = `
+    .panel{
+      width:min(560px,100%);
+      border:1px solid var(--line);
+      border-right:0;
+      transition:
+        transform .32s cubic-bezier(.22,.9,.32,1),
+        border-color var(--breath-duration,4000ms) ease,
+        box-shadow var(--breath-duration,4000ms) ease;
+    }
+    .panel.breath-in{
+      border-color:rgba(78,93,75,.50);
+      box-shadow:-18px 0 44px rgba(43,42,38,.11), inset 0 0 0 2px rgba(78,93,75,.10);
+    }
+    .panel.breath-hold{
+      border-color:rgba(169,136,79,.44);
+      box-shadow:-18px 0 44px rgba(43,42,38,.10), inset 0 0 0 2px rgba(169,136,79,.08);
+    }
+    .panel.breath-out{
+      border-color:rgba(228,223,211,.92);
+      box-shadow:-14px 0 34px rgba(43,42,38,.08), inset 0 0 0 1px rgba(78,93,75,.025);
+    }
+    .breath-circle{display:none!important;}
+    .breath-wrap{
+      align-items:center;
+      gap:0;
+      margin:12px 0 2px;
+      padding:6px 0 2px;
+    }
+    .breath-label{
+      font-size:10px;
+      letter-spacing:.16em;
+      color:var(--ink-faint);
+      transition:color 1.2s ease;
+    }
+    .script-box{
+      max-height:none!important;
+      overflow:visible!important;
+      padding-right:0!important;
+      margin-top:24px;
+      font-size:15.5px;
+      line-height:1.9;
+      scroll-behavior:auto!important;
+    }
+    .script-box p{
+      margin:0 0 28px;
+      will-change:opacity,transform;
+    }
+    .player{
+      margin-top:20px;
+      padding:13px 15px;
+    }
+    @media (max-width:640px){
+      .panel{
+        height:90%;
+        width:100%;
+        padding:30px 22px 46px;
+        border-right:1px solid var(--line);
+        border-bottom:0;
+      }
+    }
+    @media (max-width:520px){
+      .panel{height:92%;padding:28px 20px 44px;}
+      .script-box{font-size:15px;line-height:1.88;margin-top:22px;}
+      .script-box p{margin-bottom:26px;}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .panel{transition:none!important;}
+      .script-box p{transition:none!important;transform:none!important;}
+    }
+  `;
+  document.head.appendChild(experienceStyle);
+
+  function slowScrollTo(el, target, duration = 2200){
+    const start = el.scrollTop;
+    const max = Math.max(0, el.scrollHeight - el.clientHeight);
+    const end = Math.max(0, Math.min(target, max));
+    const distance = end - start;
+    if(Math.abs(distance) < 2) return;
+    const started = performance.now();
+    const ease = (t) => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+    const step = (now) => {
+      const progress = Math.min(1, (now - started) / duration);
+      el.scrollTop = start + distance * ease(progress);
+      if(progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Replace passage reveal with a slower fade and a single gentle panel scroll.
+  advanceSession = function(state){
+    if(state.index >= state.paragraphs.length){
+      state.statusEl.textContent = 'Session complete';
+      state.playing = false;
+      state.btnEl.textContent = '↺';
+      stopBreathingLoop();
+      chime();
+      showReflection();
+      return;
+    }
+
+    const p = document.createElement('p');
+    p.textContent = state.paragraphs[state.index];
+    p.style.opacity = '0';
+    p.style.transform = 'translateY(8px)';
+    p.style.transition = 'opacity 4s cubic-bezier(.22,.7,.25,1), transform 4s cubic-bezier(.22,.7,.25,1)';
+    state.boxEl.appendChild(p);
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      p.style.opacity = '1';
+      p.style.transform = 'translateY(0)';
+
+      const panelRect = panel.getBoundingClientRect();
+      const paragraphRect = p.getBoundingClientRect();
+      const comfortableBottom = panelRect.bottom - 120;
+      if(paragraphRect.bottom > comfortableBottom){
+        const delta = paragraphRect.bottom - comfortableBottom;
+        slowScrollTo(panel, panel.scrollTop + delta + 72, 2300);
+      }
+    }));
+
+    const progress = state.index / Math.max(1, state.paragraphs.length - 1);
+    state.statusEl.textContent = progress < 0.22
+      ? 'Beginning…'
+      : progress < 0.62
+        ? 'Settling in…'
+        : progress < 0.88
+          ? 'Take your time…'
+          : 'Stay with this…';
+
+    const dur = readingDuration(state.paragraphs[state.index], state.paceMultiplier);
+    state.index++;
+    if(state.playing){
+      state.timer = setTimeout(() => advanceSession(state), dur);
+    }
+  };
+
+  // Move the breathing animation from the circle to the session panel border.
+  runBreathPhase = function(){
+    if(!breathing) return;
+    const label = document.getElementById('breathLabel');
+    const durMs = BREATH_DURATIONS[breathPhase];
+
+    panel.classList.remove('breath-in','breath-hold','breath-out');
+    panel.style.setProperty('--breath-duration', durMs + 'ms');
+
+    if(breathPhase === 'in'){
+      panel.classList.add('breath-in');
+      label.textContent = 'Breathe in';
+      playBreathSound('in', durMs / 1000);
+    }else if(breathPhase === 'hold'){
+      panel.classList.add('breath-hold');
+      label.textContent = 'Hold';
+    }else{
+      panel.classList.add('breath-out');
+      label.textContent = 'Breathe out';
+      playBreathSound('out', durMs / 1000);
+    }
+
+    breathTimer = setTimeout(() => {
+      const nextIndex = (BREATH_ORDER.indexOf(breathPhase) + 1) % BREATH_ORDER.length;
+      breathPhase = BREATH_ORDER[nextIndex];
+      runBreathPhase();
+    }, durMs);
+  };
+
+  stopBreathingLoop = function(){
+    breathing = false;
+    clearTimeout(breathTimer);
+    panel.classList.remove('breath-in','breath-hold','breath-out');
+    panel.style.removeProperty('--breath-duration');
+  };
 })();
