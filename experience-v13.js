@@ -1,4 +1,4 @@
-// Points v14 session behavior: stable auto-follow and immersive perimeter breathing.
+// Points v15 session behavior: quiet native reader advance and immersive perimeter breathing.
 (() => {
   if (typeof panel === 'undefined' || !panel) return;
 
@@ -39,51 +39,54 @@
     .breath-circle{display:none!important;}
     .script-box,
     .script-box *{overflow-anchor:none!important;}
+    .script-box p{scroll-margin-bottom:118px;}
   `;
   document.head.appendChild(style);
 
-  let scrollFrame = null;
+  let followTimer = null;
+  let userIsScrolling = false;
 
-  function cancelAutoFollow(){
-    if(scrollFrame !== null){
-      cancelAnimationFrame(scrollFrame);
-      scrollFrame = null;
+  function cancelReaderAdvance(){
+    if(followTimer !== null){
+      clearTimeout(followTimer);
+      followTimer = null;
     }
   }
 
-  function followForward(target, duration = 2400){
-    cancelAutoFollow();
-
-    const start = panel.scrollTop;
-    const max = Math.max(0, panel.scrollHeight - panel.clientHeight);
-    const end = Math.max(start, Math.min(target, max));
-    const distance = end - start;
-    if(distance < 2) return;
-
-    const started = performance.now();
-    const ease = (t) => 1 - Math.pow(1 - t, 3);
-
-    const step = (now) => {
-      const t = Math.min(1, (now - started) / duration);
-      const next = start + distance * ease(t);
-      panel.scrollTop = Math.max(panel.scrollTop, next);
-
-      if(t < 1){
-        scrollFrame = requestAnimationFrame(step);
-      }else{
-        scrollFrame = null;
-      }
-    };
-
-    scrollFrame = requestAnimationFrame(step);
+  function markUserScroll(){
+    userIsScrolling = true;
+    cancelReaderAdvance();
+    clearTimeout(markUserScroll.timer);
+    markUserScroll.timer = setTimeout(() => {
+      userIsScrolling = false;
+    }, 1800);
   }
 
-  panel.addEventListener('touchstart', cancelAutoFollow, { passive:true });
-  panel.addEventListener('wheel', cancelAutoFollow, { passive:true });
+  function scheduleReaderAdvance(paragraph){
+    cancelReaderAdvance();
+    followTimer = setTimeout(() => {
+      followTimer = null;
+      if(userIsScrolling || !paragraph.isConnected) return;
+
+      const panelRect = panel.getBoundingClientRect();
+      const paragraphRect = paragraph.getBoundingClientRect();
+      const readingLine = panelRect.bottom - 118;
+
+      if(paragraphRect.bottom <= readingLine) return;
+
+      const needed = paragraphRect.bottom - readingLine;
+      const step = Math.min(Math.max(needed + 14, 48), 132);
+      panel.scrollBy({ top: step, left: 0, behavior: 'smooth' });
+    }, 1350);
+  }
+
+  panel.addEventListener('touchstart', markUserScroll, { passive:true });
+  panel.addEventListener('touchmove', markUserScroll, { passive:true });
+  panel.addEventListener('wheel', markUserScroll, { passive:true });
 
   advanceSession = function(state){
     if(state.index >= state.paragraphs.length){
-      cancelAutoFollow();
+      cancelReaderAdvance();
       state.statusEl.textContent = 'Session complete';
       state.playing = false;
       state.btnEl.textContent = '↺';
@@ -103,15 +106,7 @@
     requestAnimationFrame(() => requestAnimationFrame(() => {
       p.style.opacity = '1';
       p.style.transform = 'translateY(0)';
-
-      const panelRect = panel.getBoundingClientRect();
-      const paragraphRect = p.getBoundingClientRect();
-      const readingLine = panelRect.bottom - Math.min(150, panel.clientHeight * .22);
-
-      if(paragraphRect.bottom > readingLine){
-        const needed = paragraphRect.bottom - readingLine;
-        followForward(panel.scrollTop + needed + 18, 2400);
-      }
+      scheduleReaderAdvance(p);
     }));
 
     const progress = state.index / Math.max(1, state.paragraphs.length - 1);
@@ -162,7 +157,7 @@
   stopBreathingLoop = function(){
     breathing = false;
     clearTimeout(breathTimer);
-    cancelAutoFollow();
+    cancelReaderAdvance();
     panel.classList.remove('breath-in','breath-hold','breath-out');
     panel.style.removeProperty('--breath-duration');
   };
