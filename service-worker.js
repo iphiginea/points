@@ -1,6 +1,6 @@
 // Service worker for install support, offline fallback, and lightweight
 // compatibility/presentation patches applied to the current single-file app.
-const CACHE_NAME = 'points-shell-v3';
+const CACHE_NAME = 'points-shell-v4';
 const SHELL_FILES = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {
@@ -101,6 +101,18 @@ function polishHtml(input) {
   html = html.replace(
     `document.getElementById('panelMeridian').textContent = currentPoint.category;`,
     `document.getElementById('panelMeridian').textContent = currentPoint.sub;`,
+  );
+
+  // Keep the overall session drawer following the newest revealed passage.
+  // The script box already scrolls internally; this also moves the drawer so
+  // that box stays comfortably visible on mobile as the session advances.
+  html = html.replace(
+    `state.boxEl.scrollTo({ top: state.boxEl.scrollHeight, behavior: 'smooth' });`,
+    `state.boxEl.scrollTo({ top: state.boxEl.scrollHeight, behavior: 'smooth' });
+  requestAnimationFrame(() => {
+    const targetTop = Math.max(0, state.boxEl.offsetTop - 110);
+    panel.scrollTo({ top: targetTop, behavior: 'smooth' });
+  });`,
   );
 
   return html;
