@@ -1,4 +1,4 @@
-// Points v13 session behavior: stable auto-follow and visible perimeter breathing.
+// Points v14 session behavior: stable auto-follow and immersive perimeter breathing.
 (() => {
   if (typeof panel === 'undefined' || !panel) return;
 
@@ -7,19 +7,31 @@
     .panel{
       overflow-anchor:none!important;
       border-color:var(--line)!important;
-      box-shadow:-14px 0 34px rgba(43,42,38,.08), inset 0 0 0 1px rgba(228,223,211,.72)!important;
+      box-shadow:
+        -14px 0 34px rgba(43,42,38,.08),
+        inset 0 0 0 1px rgba(228,223,211,.58),
+        inset 0 0 18px rgba(78,93,75,.012)!important;
       transition:
         transform .32s cubic-bezier(.22,.9,.32,1),
         box-shadow var(--breath-duration,4000ms) cubic-bezier(.37,0,.63,1)!important;
     }
     .panel.breath-in{
-      box-shadow:-18px 0 42px rgba(43,42,38,.10), inset 0 0 0 4px rgba(58,70,56,.66), inset 0 0 30px rgba(78,93,75,.055)!important;
+      box-shadow:
+        -20px 0 46px rgba(43,42,38,.10),
+        inset 0 0 0 8px rgba(58,70,56,.54),
+        inset 0 0 72px rgba(78,93,75,.13)!important;
     }
     .panel.breath-hold{
-      box-shadow:-18px 0 42px rgba(43,42,38,.10), inset 0 0 0 4px rgba(58,70,56,.66), inset 0 0 30px rgba(78,93,75,.055)!important;
+      box-shadow:
+        -20px 0 46px rgba(43,42,38,.10),
+        inset 0 0 0 8px rgba(58,70,56,.54),
+        inset 0 0 72px rgba(78,93,75,.13)!important;
     }
     .panel.breath-out{
-      box-shadow:-14px 0 34px rgba(43,42,38,.08), inset 0 0 0 1px rgba(228,223,211,.72), inset 0 0 0 rgba(78,93,75,0)!important;
+      box-shadow:
+        -14px 0 34px rgba(43,42,38,.08),
+        inset 0 0 0 2px rgba(228,223,211,.44),
+        inset 0 0 30px rgba(78,93,75,.018)!important;
     }
     .panel.breath-in .breath-label,
     .panel.breath-hold .breath-label{color:var(--sage-deep)!important;}
