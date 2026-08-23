@@ -137,6 +137,9 @@
     : null;
   if(paceLabel) paceLabel.classList.add('reader-pace-label');
 
+  const READER_TRANSITION_MS = 3400;
+  const MIN_LINE_HOLD_MS = 3000;
+
   function enterReaderMode(state){
     panel.classList.add('reader-mode');
     panel.scrollTop = 0;
@@ -198,7 +201,8 @@
           ? 'Take your time…'
           : 'Stay with this…';
 
-    const dur = readingDuration(state.paragraphs[state.index], state.paceMultiplier);
+    const naturalDuration = readingDuration(state.paragraphs[state.index], state.paceMultiplier);
+    const dur = Math.max(naturalDuration, READER_TRANSITION_MS + MIN_LINE_HOLD_MS);
     state.index++;
     if(state.playing){
       state.timer = setTimeout(() => advanceSession(state), dur);
