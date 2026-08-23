@@ -1,7 +1,7 @@
 // Service worker for install support, offline fallback, and lightweight
 // compatibility/presentation patches applied to the current single-file app.
-const CACHE_NAME = 'points-shell-v13';
-const SHELL_FILES = ['./', './index.html', './manifest.json', './session-copy.js?v=13', './experience-v13.js?v=13'];
+const CACHE_NAME = 'points-shell-v14';
+const SHELL_FILES = ['./', './index.html', './manifest.json', './session-copy.js?v=14', './experience-v13.js?v=14'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -162,7 +162,7 @@ function polishHtml(input) {
   // Load the writing and final session-behavior layer after the app defines POINTS.
   html = html.replace(
     '</body>',
-    '<script src="./session-copy.js?v=13"></script>\n<script src="./experience-v13.js?v=13"></script>\n</body>',
+    '<script src="./session-copy.js?v=14"></script>\n<script src="./experience-v13.js?v=14"></script>\n</body>',
   );
 
   // Add final visual overrides in one place so the raw app remains easy to maintain.
