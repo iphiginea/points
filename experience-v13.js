@@ -1,4 +1,4 @@
-// Points v17 session behavior: fixed hypnosis reader and immersive perimeter breathing.
+// Points v18 session behavior: paced hypnosis reader and immersive breath field.
 (() => {
   if (typeof panel === 'undefined' || !panel) return;
 
@@ -6,6 +6,7 @@
   style.textContent = `
     .panel{
       overflow-anchor:none!important;
+      isolation:isolate;
       border-color:var(--line)!important;
       box-shadow:
         -14px 0 34px rgba(43,42,38,.08),
@@ -13,29 +14,84 @@
         inset 0 0 18px rgba(78,93,75,.012)!important;
       transition:
         transform .32s cubic-bezier(.22,.9,.32,1),
-        box-shadow var(--breath-duration,4000ms) cubic-bezier(.37,0,.63,1)!important;
+        box-shadow var(--breath-duration,1200ms) var(--breath-ease,cubic-bezier(.37,0,.63,1))!important;
     }
+    .panel::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      opacity:0;
+      transform:scale(1.018);
+      transform-origin:50% 52%;
+      background:
+        radial-gradient(ellipse 62% 54% at 50% 52%,
+          rgba(255,255,255,0) 24%,
+          rgba(220,227,217,.012) 48%,
+          rgba(78,93,75,.11) 100%),
+        linear-gradient(90deg,
+          rgba(78,93,75,.055),
+          transparent 17%,
+          transparent 83%,
+          rgba(78,93,75,.045));
+      box-shadow:inset 0 0 70px rgba(78,93,75,.035);
+      transition:
+        opacity var(--breath-duration,1200ms) var(--breath-ease,cubic-bezier(.37,0,.63,1)),
+        transform var(--breath-duration,1200ms) var(--breath-ease,cubic-bezier(.37,0,.63,1));
+    }
+    .panel > *{position:relative;z-index:1;}
+
     .panel.breath-in{
       box-shadow:
-        -20px 0 46px rgba(43,42,38,.10),
-        inset 0 0 0 8px rgba(58,70,56,.54),
-        inset 0 0 72px rgba(78,93,75,.13)!important;
+        -18px 0 42px rgba(43,42,38,.09),
+        inset 0 0 0 3px rgba(58,70,56,.31),
+        inset 0 0 86px rgba(78,93,75,.115)!important;
+    }
+    .panel.breath-in::before{
+      opacity:.92;
+      transform:scale(.985);
     }
     .panel.breath-hold{
       box-shadow:
-        -20px 0 46px rgba(43,42,38,.10),
-        inset 0 0 0 8px rgba(58,70,56,.54),
-        inset 0 0 72px rgba(78,93,75,.13)!important;
+        -18px 0 42px rgba(43,42,38,.09),
+        inset 0 0 0 3px rgba(58,70,56,.31),
+        inset 0 0 86px rgba(78,93,75,.115)!important;
+    }
+    .panel.breath-hold::before{
+      opacity:.92;
+      transform:scale(.985);
     }
     .panel.breath-out{
       box-shadow:
         -14px 0 34px rgba(43,42,38,.08),
-        inset 0 0 0 2px rgba(228,223,211,.44),
-        inset 0 0 30px rgba(78,93,75,.018)!important;
+        inset 0 0 0 1px rgba(228,223,211,.46),
+        inset 0 0 30px rgba(78,93,75,.022)!important;
+    }
+    .panel.breath-out::before{
+      opacity:.14;
+      transform:scale(1.018);
+    }
+    .panel.breath-rest{
+      box-shadow:
+        -14px 0 34px rgba(43,42,38,.08),
+        inset 0 0 0 1px rgba(228,223,211,.58),
+        inset 0 0 18px rgba(78,93,75,.012)!important;
+    }
+    .panel.breath-rest::before{
+      opacity:0;
+      transform:scale(1.018);
+    }
+
+    .breath-label{
+      transition:
+        color var(--breath-duration,1200ms) ease,
+        opacity 1s ease!important;
     }
     .panel.breath-in .breath-label,
-    .panel.breath-hold .breath-label{color:var(--sage-deep)!important;}
-    .panel.breath-out .breath-label{color:var(--ink-faint)!important;}
+    .panel.breath-hold .breath-label{color:var(--sage-deep)!important;opacity:.92;}
+    .panel.breath-out .breath-label{color:var(--ink-faint)!important;opacity:.72;}
+    .panel.breath-rest .breath-label{color:var(--ink-faint)!important;opacity:.42;}
     .breath-circle{display:none!important;}
 
     .panel.reader-mode{
@@ -78,6 +134,7 @@
       opacity:0;
       transform:translateY(-50%) translateY(12px);
       filter:blur(0);
+      color:rgba(43,42,38,.97);
       font-size:15.5px;
       line-height:1.9;
       text-align:left;
@@ -85,7 +142,8 @@
         top 3.4s cubic-bezier(.22,.7,.25,1),
         opacity 3.4s cubic-bezier(.22,.7,.25,1),
         transform 3.4s cubic-bezier(.22,.7,.25,1),
-        filter 3.4s ease;
+        filter 3.4s ease,
+        color var(--breath-duration,1200ms) ease;
       will-change:top,opacity,transform;
     }
     .script-box p.reader-current{
@@ -105,6 +163,12 @@
       transform:translateY(-50%) translateY(-12px);
       filter:blur(.5px);
     }
+    .panel.breath-in .reader-current,
+    .panel.breath-hold .reader-current{color:rgba(43,42,38,1);}
+    .panel.breath-out .reader-current,
+    .panel.breath-rest .reader-current{color:rgba(43,42,38,.93);}
+    .panel.breath-out .reader-previous{opacity:.17;}
+    .panel.breath-rest .reader-previous{opacity:.14;}
 
     @media (max-width:520px){
       .panel.reader-mode{
@@ -123,8 +187,9 @@
     }
 
     @media (prefers-reduced-motion:reduce){
+      .panel::before{transition:opacity .5s ease!important;transform:none!important;}
       .script-box p{
-        transition:opacity .35s ease!important;
+        transition:opacity .35s ease,color .5s ease!important;
         transform:translateY(-50%)!important;
       }
     }
@@ -151,6 +216,8 @@
 
   const READER_TRANSITION_MS = 3400;
   const MIN_LINE_HOLD_MS = 6000;
+  const HYPNOTIC_BREATH_DURATIONS = { in:4000, hold:4000, out:6000, rest:1200 };
+  const HYPNOTIC_BREATH_ORDER = ['in','hold','out','rest'];
 
   function enterReaderMode(state){
     panel.classList.add('reader-mode');
@@ -221,31 +288,80 @@
     }
   };
 
+  // Softer breath texture with separate inhale/exhale contours and no hard loop edge.
+  playBreathSound = function(direction, durSeconds){
+    try{
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if(audioCtx.state === 'suspended') audioCtx.resume();
+      const now = audioCtx.currentTime;
+      const dur = durSeconds || 4;
+
+      const source = audioCtx.createBufferSource();
+      source.buffer = getNoiseBuffer(audioCtx);
+      source.loop = true;
+
+      const band = audioCtx.createBiquadFilter();
+      band.type = 'bandpass';
+      band.Q.value = 0.42;
+
+      const softener = audioCtx.createBiquadFilter();
+      softener.type = 'lowpass';
+      softener.frequency.value = direction === 'in' ? 920 : 760;
+      softener.Q.value = 0.25;
+
+      if(direction === 'in'){
+        band.frequency.setValueAtTime(260, now);
+        band.frequency.exponentialRampToValueAtTime(610, now + dur * .88);
+      }else{
+        band.frequency.setValueAtTime(540, now);
+        band.frequency.exponentialRampToValueAtTime(220, now + dur * .92);
+      }
+
+      const gain = audioCtx.createGain();
+      const peak = direction === 'in' ? 0.0052 : 0.0044;
+      gain.gain.setValueAtTime(0.00001, now);
+      gain.gain.exponentialRampToValueAtTime(peak, now + dur * .38);
+      gain.gain.setValueAtTime(peak, now + dur * .58);
+      gain.gain.exponentialRampToValueAtTime(0.00001, now + dur);
+
+      source.connect(band).connect(softener).connect(gain).connect(audioCtx.destination);
+      source.start(now, Math.random() * 1.5);
+      source.stop(now + dur + .08);
+    }catch(e){ /* audio unavailable — visual breathing still proceeds silently */ }
+  };
+
   runBreathPhase = function(){
     if(!breathing) return;
 
     const label = document.getElementById('breathLabel');
-    const durMs = BREATH_DURATIONS[breathPhase];
+    const durMs = HYPNOTIC_BREATH_DURATIONS[breathPhase] || HYPNOTIC_BREATH_DURATIONS.in;
 
-    panel.classList.remove('breath-in','breath-hold','breath-out');
+    panel.classList.remove('breath-in','breath-hold','breath-out','breath-rest');
     panel.style.setProperty('--breath-duration', durMs + 'ms');
 
     if(breathPhase === 'in'){
+      panel.style.setProperty('--breath-ease', 'cubic-bezier(.18,.02,.18,1)');
       panel.classList.add('breath-in');
       label.textContent = 'Breathe in';
       playBreathSound('in', durMs / 1000);
     }else if(breathPhase === 'hold'){
+      panel.style.setProperty('--breath-ease', 'linear');
       panel.classList.add('breath-hold');
-      label.textContent = 'Hold';
-    }else{
+      label.textContent = 'Stay';
+    }else if(breathPhase === 'out'){
+      panel.style.setProperty('--breath-ease', 'cubic-bezier(.16,.6,.28,1)');
       panel.classList.add('breath-out');
       label.textContent = 'Breathe out';
       playBreathSound('out', durMs / 1000);
+    }else{
+      panel.style.setProperty('--breath-ease', 'cubic-bezier(.3,0,.7,1)');
+      panel.classList.add('breath-rest');
+      label.textContent = 'Rest';
     }
 
     breathTimer = setTimeout(() => {
-      const nextIndex = (BREATH_ORDER.indexOf(breathPhase) + 1) % BREATH_ORDER.length;
-      breathPhase = BREATH_ORDER[nextIndex];
+      const nextIndex = (HYPNOTIC_BREATH_ORDER.indexOf(breathPhase) + 1) % HYPNOTIC_BREATH_ORDER.length;
+      breathPhase = HYPNOTIC_BREATH_ORDER[nextIndex];
       runBreathPhase();
     }, durMs);
   };
@@ -253,8 +369,9 @@
   stopBreathingLoop = function(){
     breathing = false;
     clearTimeout(breathTimer);
-    panel.classList.remove('breath-in','breath-hold','breath-out');
+    panel.classList.remove('breath-in','breath-hold','breath-out','breath-rest');
     panel.style.removeProperty('--breath-duration');
+    panel.style.removeProperty('--breath-ease');
   };
 
   const closeButton = panel.querySelector('.panel-close');
