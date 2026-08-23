@@ -33,3 +33,5 @@ jobs:
           git add service-worker.js
           git commit -m "Bump Points reader to v15"
           git push
+
+# trigger v15
