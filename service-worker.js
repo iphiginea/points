@@ -1,7 +1,7 @@
 // Service worker for install support, offline fallback, and lightweight
 // compatibility/presentation patches applied to the current single-file app.
-const CACHE_NAME = 'points-shell-v9';
-const SHELL_FILES = ['./', './index.html', './manifest.json'];
+const CACHE_NAME = 'points-shell-v10';
+const SHELL_FILES = ['./', './index.html', './manifest.json', './session-copy.js'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -28,7 +28,7 @@ function polishHtml(input) {
   // Give first-time users a simple orientation before asking them to interact.
   html = html.replace(
     "<p>Each point on the map holds a session — settle in, choose what you're carrying today, and let the point guide the focus.</p>",
-    '<p>Twelve points, each connected to a feeling or state. Choose what feels closest today.</p>',
+    '<p>Eleven points, each connected to a feeling or state. Choose what feels closest today.</p>',
   );
   html = html.replace(
     '<div class="eyebrow">Select a point</div>',
@@ -128,6 +128,13 @@ function polishHtml(input) {
   html = html.replace(
     "    const moodTag = item.mood ? ` · ${MOOD_LABELS[item.mood] || item.mood}` : '';\n    return `<div class=\"history-item\"><span class=\"h-name\">${item.label}${moodTag}</span><span class=\"h-date\">${dateStr}</span></div>`;",
     "    const parts = item.label.split(' · ');\n    const pointName = parts.shift() || item.label;\n    const feeling = parts.join(' · ') || 'Practice';\n    const mood = item.mood ? (MOOD_LABELS[item.mood] || item.mood) : '';\n    return `<div class=\"history-item\"><div class=\"history-copy\"><span class=\"history-feeling\">${feeling}</span><span class=\"history-point\">${pointName}</span>${mood ? `<span class=\"history-mood\">${mood}</span>` : ''}</div><span class=\"h-date\">${dateStr}</span></div>`;",
+  );
+
+  // Load editorial copy after the app defines POINTS, keeping long-form writing
+  // separate from the presentation patch.
+  html = html.replace(
+    '</body>',
+    '<script src="./session-copy.js"></script>\n</body>',
   );
 
   // Add final visual overrides in one place so the raw app remains easy to maintain.
