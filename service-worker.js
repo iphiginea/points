@@ -1,6 +1,6 @@
 // Service worker for install support, offline fallback, and lightweight
 // compatibility/presentation patches applied to the current single-file app.
-const CACHE_NAME = 'points-shell-v8';
+const CACHE_NAME = 'points-shell-v9';
 const SHELL_FILES = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {
@@ -28,7 +28,7 @@ function polishHtml(input) {
   // Give first-time users a simple orientation before asking them to interact.
   html = html.replace(
     "<p>Each point on the map holds a session — settle in, choose what you're carrying today, and let the point guide the focus.</p>",
-    '<p>12 points, each connected to a feeling or state. Choose what feels closest today.</p>',
+    '<p>Twelve points, each connected to a feeling or state. Choose what feels closest today.</p>',
   );
   html = html.replace(
     '<div class="eyebrow">Select a point</div>',
@@ -135,17 +135,61 @@ function polishHtml(input) {
     '</style>',
     `
   /* ---------- Points presentation polish ---------- */
-  .figure-wrap .eyebrow{margin-bottom:6px;}
+  header{
+    max-width:660px;
+    margin:0 auto;
+    padding:48px 24px 24px;
+  }
+  header .eyebrow{
+    color:var(--brass);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.18em;
+  }
+  header h1{
+    font-size:clamp(46px,9vw,68px);
+    line-height:.98;
+    letter-spacing:-.035em;
+    margin:11px 0 15px;
+  }
+  header p{
+    max-width:500px;
+    font-size:14.5px;
+    line-height:1.65;
+  }
+  .app{
+    max-width:760px;
+    padding-top:8px;
+    gap:24px;
+  }
+  .figure-wrap{
+    background:rgba(255,255,255,.72);
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:none;
+    padding:30px 28px 26px;
+  }
+  .figure-wrap > .eyebrow{
+    margin-bottom:5px;
+    font-family:'Fraunces',serif;
+    font-size:23px;
+    line-height:1.2;
+    font-style:italic;
+    font-weight:500;
+    letter-spacing:-.01em;
+    text-transform:none;
+    color:var(--sage-deep);
+  }
   .figure-guide{
-    margin:0 0 14px;
+    margin:0 0 18px;
     color:var(--ink-faint);
-    font-size:12px;
+    font-size:12.5px;
     line-height:1.45;
     text-align:center;
   }
   .figure-frame{
     max-width:324px;
-    margin-top:2px;
+    margin-top:0;
   }
   .point .halo{
     opacity:.13;
@@ -178,7 +222,7 @@ function polishHtml(input) {
   .feeling-index-label{
     width:100%;
     max-width:560px;
-    margin:26px auto 8px;
+    margin:28px auto 8px;
     padding:0 2px;
     color:var(--ink-faint);
     font-size:10.5px;
@@ -315,7 +359,13 @@ function polishHtml(input) {
   .history-mood{color:var(--brass);font-size:11.5px;font-weight:600;}
 
   @media (max-width:520px){
-    .figure-wrap{padding-left:16px;padding-right:16px;}
+    header{padding:38px 22px 20px;}
+    header h1{font-size:52px;}
+    header p{font-size:14px;line-height:1.6;}
+    .app{padding-left:14px;padding-right:14px;}
+    .figure-wrap{padding:26px 16px 22px;}
+    .figure-wrap > .eyebrow{font-size:21px;}
+    .figure-guide{margin-bottom:16px;}
     .feeling-index-label{margin-top:24px;}
     .point-index{max-width:none;}
     .chip{min-height:70px;padding:13px 14px;}
