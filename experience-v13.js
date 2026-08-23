@@ -1,4 +1,4 @@
-// Points v16 session behavior: fixed hypnosis reader and immersive perimeter breathing.
+// Points v17 session behavior: fixed hypnosis reader and immersive perimeter breathing.
 (() => {
   if (typeof panel === 'undefined' || !panel) return;
 
@@ -137,8 +137,20 @@
     : null;
   if(paceLabel) paceLabel.classList.add('reader-pace-label');
 
+  if(lengthPicker){
+    const durationLabels = {
+      short: ['5–6 min', 'Brief'],
+      medium: ['6–8 min', 'Steady'],
+      long: ['8–10 min', 'Unhurried']
+    };
+    lengthPicker.querySelectorAll('.length-chip').forEach((chip) => {
+      const label = durationLabels[chip.dataset.length];
+      if(label) chip.innerHTML = `${label[0]}<span>${label[1]}</span>`;
+    });
+  }
+
   const READER_TRANSITION_MS = 3400;
-  const MIN_LINE_HOLD_MS = 3000;
+  const MIN_LINE_HOLD_MS = 6000;
 
   function enterReaderMode(state){
     panel.classList.add('reader-mode');
