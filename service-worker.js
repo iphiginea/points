@@ -1,6 +1,6 @@
 // Service worker for install support, offline fallback, and lightweight
 // compatibility/presentation patches applied to the current single-file app.
-const CACHE_NAME = 'points-shell-v10';
+const CACHE_NAME = 'points-shell-v11';
 const SHELL_FILES = ['./', './index.html', './manifest.json', './session-copy.js'];
 
 self.addEventListener('install', (event) => {
@@ -83,6 +83,35 @@ function polishHtml(input) {
     '<button class="length-chip" data-length="short">2 min<span>Brief</span></button>\n    <button class="length-chip active" data-length="medium">4 min<span>Steady</span></button>\n    <button class="length-chip" data-length="long">7 min<span>Unhurried</span></button>',
   );
   html = html.replace('>Begin session</button>', '>Begin practice</button>');
+
+  // Keep the hypnosis flow uninterrupted. A single chime marks completion only.
+  html = html.replace(
+    'A soft chime marks each new passage',
+    'A soft chime marks the end of the session',
+  );
+  html = html.replace(
+    `  chime();
+  const p = document.createElement('p');`,
+    `  const p = document.createElement('p');`,
+  );
+  html = html.replace(
+    `    stopBreathingLoop();
+    showReflection();
+    return;`,
+    `    stopBreathingLoop();
+    chime();
+    showReflection();
+    return;`,
+  );
+  html = html.replace(
+    `  stopBreathingLoop();
+  showReflection();
+});`,
+    `  stopBreathingLoop();
+  chime();
+  showReflection();
+});`,
+  );
 
   // Replace mechanical line counts with softer progress language.
   html = html.replace(
