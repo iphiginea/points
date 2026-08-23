@@ -1,6 +1,6 @@
 // Service worker for install support, offline fallback, and lightweight
 // compatibility/presentation patches applied to the current single-file app.
-const CACHE_NAME = 'points-shell-v5';
+const CACHE_NAME = 'points-shell-v6';
 const SHELL_FILES = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {
@@ -212,20 +212,15 @@ function polishHtml(input) {
   .history-copy{display:flex; flex-direction:column; gap:3px; min-width:0;}
   .history-feeling{font-weight:600; color:var(--ink); line-height:1.35;}
   .history-point{font-family:'Fraunces',serif; font-style:italic; color:var(--ink-soft); font-size:13px;}
-  .history-mood{color:var(--brass); font-size:11.5px; font-weight:600;}`, 
+  .history-mood{color:var(--brass); font-size:11.5px; font-weight:600;}`,
   );
   html = html.replace(
     `const MOOD_LABELS = { lighter: 'Lighter', same: 'Same', heavier: 'Heavier' };`,
     `const MOOD_LABELS = { lighter: 'Lighter', same: 'About the same', heavier: 'Heavier' };`,
   );
   html = html.replace(
-    `    const moodTag = item.mood ? \` · ${MOOD_LABELS[item.mood] || item.mood}\` : '';
-    return \`<div class="history-item"><span class="h-name">${item.label}${moodTag}</span><span class="h-date">${dateStr}</span></div>\`;`,
-    `    const parts = item.label.split(' · ');
-    const pointName = parts.shift() || item.label;
-    const feeling = parts.join(' · ') || 'Practice';
-    const mood = item.mood ? (MOOD_LABELS[item.mood] || item.mood) : '';
-    return \`<div class="history-item"><div class="history-copy"><span class="history-feeling">${feeling}</span><span class="history-point">${pointName}</span>${mood ? \`<span class="history-mood">${mood}</span>\` : ''}</div><span class="h-date">${dateStr}</span></div>\`;`,
+    "    const moodTag = item.mood ? ` · ${MOOD_LABELS[item.mood] || item.mood}` : '';\n    return `<div class=\"history-item\"><span class=\"h-name\">${item.label}${moodTag}</span><span class=\"h-date\">${dateStr}</span></div>`;",
+    "    const parts = item.label.split(' · ');\n    const pointName = parts.shift() || item.label;\n    const feeling = parts.join(' · ') || 'Practice';\n    const mood = item.mood ? (MOOD_LABELS[item.mood] || item.mood) : '';\n    return `<div class=\"history-item\"><div class=\"history-copy\"><span class=\"history-feeling\">${feeling}</span><span class=\"history-point\">${pointName}</span>${mood ? `<span class=\"history-mood\">${mood}</span>` : ''}</div><span class=\"h-date\">${dateStr}</span></div>`;",
   );
 
   return html;
