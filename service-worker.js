@@ -1,7 +1,7 @@
 // Service worker for install support, offline fallback, and lightweight
 // compatibility/presentation patches applied to the current single-file app.
-const CACHE_NAME = 'points-shell-v11';
-const SHELL_FILES = ['./', './index.html', './manifest.json', './session-copy.js'];
+const CACHE_NAME = 'points-shell-v12';
+const SHELL_FILES = ['./', './index.html', './manifest.json', './session-copy.js?v=12'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -163,7 +163,7 @@ function polishHtml(input) {
   // separate from the presentation patch.
   html = html.replace(
     '</body>',
-    '<script src="./session-copy.js"></script>\n</body>',
+    '<script src="./session-copy.js?v=12"></script>\n</body>',
   );
 
   // Add final visual overrides in one place so the raw app remains easy to maintain.
